@@ -1,63 +1,221 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+```sql
+SET FOREIGN_KEY_CHECKS=0;
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+create table `addresses` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `city_id` bigint unsigned not null, 
+    `road` varchar(255) not null, 
+    `road_num` varchar(255) not null, 
+    `apartment_floor` varchar(255) not null, 
+    `apartment_num` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `addresses` add constraint `addresses_city_id_foreign` foreign key (`city_id`) references `cities` (`id`);
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+create table `cities` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `country_id` bigint unsigned not null, 
+    `zipcode` varchar(255) not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `cities` add constraint `cities_country_id_foreign` foreign key (`country_id`) references `countries` (`id`);
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+create table `countries` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `sub_region_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `native_name` varchar(255) not null, 
+    `flag` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `countries` add constraint `countries_sub_region_id_foreign` foreign key (`sub_region_id`) references `sub_regions` (`id`);
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+create table `sub_regions` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `region_id` bigint unsigned not null,
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `sub_regions` add constraint `sub_regions_region_id_foreign` foreign key (`region_id`) references `regions` (`id`);
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+create table `regions` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+create table `customers` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `login_id` bigint unsigned not null, 
+    `address_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `customers` add constraint `customers_login_id_foreign` foreign key (`login_id`) references `logins` (`id`);
+alter table `customers` add constraint `customers_address_id_foreign` foreign key (`address_id`) references `addresses` (`id`);
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
 
-## Contributing
+create table `logins` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `username` varchar(255) not null, 
+    `password` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+create table `locations` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `address_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `locations` add constraint `locations_address_id_foreign` foreign key (`address_id`) references `addresses` (`id`);
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+create table `departments` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `location_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+alter table `departments` add constraint `departments_location_id_foreign` foreign key (`location_id`) references `locations` (`id`)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+create table `employees` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `department_id` bigint unsigned not null, 
+    `address_id` bigint unsigned not null, 
+    `login_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `employees` add constraint `employees_department_id_foreign` foreign key (`department_id`) references `departments` (`id`);
+alter table `employees` add constraint `employees_address_id_foreign` foreign key (`address_id`) references `addresses` (`id`);
+alter table `employees` add constraint `employees_login_id_foreign` foreign key (`login_id`) references `logins` (`id`);
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+create table `orders` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `customer_id` bigint unsigned not null, 
+    `order_delivery_id` bigint unsigned not null, 
+    `extra_info` varchar(255) null, 
+    `status` enum('NOT ORDERED', 'ORDER PLACED', 'ORDER ACCEPTED', 'ORDER SEND') not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `orders` add constraint `orders_customer_id_foreign` foreign key (`customer_id`) references `customers` (`id`);
+alter table `orders` add constraint `orders_order_delivery_id_foreign` foreign key (`order_delivery_id`) references `order_deliveries` (`id`);
+
+
+create table `order_items` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `order_id` bigint unsigned not null, 
+    `item_id` bigint unsigned not null, 
+    `price` bigint not null, 
+    `status` enum('NOT ORDERED', 'ORDER PLACED', 'ORDER ACCEPTED', 'ORDER SEND') not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `order_items` add constraint `order_items_order_id_foreign` foreign key (`order_id`) references `orders` (`id`);
+alter table `order_items` add constraint `order_items_item_id_foreign` foreign key (`item_id`) references `items` (`id`);
+
+
+create table `order_discounts` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `order_id` bigint unsigned not null, 
+    `discount` bigint not null, 
+    `description` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `order_discounts` add constraint `order_discounts_order_id_foreign` foreign key (`order_id`) references `orders` (`id`);
+
+
+create table `order_deliveries` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `order_id` bigint unsigned not null, 
+    `address_id` bigint unsigned not null, 
+    `order_delivery_type_id` bigint unsigned not null, 
+    `carrier` varchar(255) not null, 
+    `tracking_id` varchar(255) not null, 
+    `status` enum('DELIVERY NOT INITIATED', 'DELIVERY INITIATED', 'DELIVERY SEND', 'DELIVERY IN-PERSON') not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `order_deliveries` add constraint `order_deliveries_order_id_foreign` foreign key (`order_id`) references `orders` (`id`);
+alter table `order_deliveries` add constraint `order_deliveries_address_id_foreign` foreign key (`address_id`) references `addresses` (`id`);
+alter table `order_deliveries` add constraint `order_deliveries_order_delivery_type_id_foreign` foreign key (`order_delivery_type_id`) references `order_delivery_types` (`id`);
+
+
+create table `order_delivery_types` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null,
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+
+
+create table `items` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `location_id` bigint unsigned not null, 
+    `product_id` bigint unsigned not null, 
+    `discount_price` bigint not null, 
+    `status` enum('IN INVENTORY', 'RESERVED', 'ORDER PLACED', 'PURCHASED') not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `items` add constraint `items_location_id_foreign` foreign key (`location_id`) references `locations` (`id`);
+alter table `items` add constraint `items_product_id_foreign` foreign key (`product_id`) references `products` (`id`);
+
+
+create table `products` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `product_type_id` bigint unsigned not null, 
+    `manufacturer_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `description` varchar(255) not null, 
+    `price` bigint not null, 
+    `status` enum('IN PRODUCTION', 'DISCONTINUED') not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `products` add constraint `products_product_type_id_foreign` foreign key (`product_type_id`) references `product_types` (`id`);
+alter table `products` add constraint `products_manufacturer_id_foreign` foreign key (`manufacturer_id`) references `manufacturers` (`id`);
+
+
+create table `product_types` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `name` varchar(255) not null, 
+    `description` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+
+
+create table `manufacturers` (
+    `id` bigint unsigned not null auto_increment primary key, 
+    `address_id` bigint unsigned not null, 
+    `name` varchar(255) not null, 
+    `created_at` timestamp null, 
+    `updated_at` timestamp null
+) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
+alter table `manufacturers` add constraint `manufacturers_address_id_foreign` foreign key (`address_id`) references `addresses` (`id`);
+
+SET FOREIGN_KEY_CHECKS=1;
+```
