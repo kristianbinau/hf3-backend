@@ -13,8 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $addressSeeder = new AddressSeeder();
-        $addressSeeder->run();
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            AddressSeeder::class,
+            LoginSeeder::class,
+            CustomerSeeder::class,
+            LocationSeeder::class,
+            DepartmentSeeder::class,
+            EmployeeSeeder::class,
+            ManufacturerSeeder::class,
+        ]);
     }
 }

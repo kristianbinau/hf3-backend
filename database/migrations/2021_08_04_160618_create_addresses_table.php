@@ -19,8 +19,8 @@ class CreateAddressesTable extends Migration
             $table->foreignId('city_id')->constrained();
             $table->string('road', 255);
             $table->string('road_num', 255);
-            $table->string('apartment_floor', 255);
-            $table->string('apartment_num', 255);
+            $table->string('apartment_floor', 255)->nullable();
+            $table->string('apartment_num', 255)->nullable();
             $table->timestamps();
         });
     }

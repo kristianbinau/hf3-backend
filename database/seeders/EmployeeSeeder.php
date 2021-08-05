@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeSeeder extends Seeder
 {
@@ -13,6 +16,17 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $faker = Factory::create();
+
+        for ($x = 1 ; $x <= 200 ; $x++) {
+            DB::table('employees')->insert([
+                'department_id' => $faker->numberBetween(1,20),
+                'address_id' => $faker->numberBetween(1,5000),
+                'login_id' => $faker->numberBetween(1,1000),
+                'name' => $faker->name(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }

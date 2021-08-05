@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +16,8 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Factory::create();
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://restcountries.eu/rest/v2/all");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -48,7 +51,7 @@ class AddressSeeder extends Seeder
                 ]);
 
                 foreach($countries as $country) {
-                    DB::table('countries')->insert([
+                    $countryId = DB::table('countries')->insertGetId([
                         'sub_region_id' => $subRegionId,
                         'name' => $country['name'],
                         'native_name' => $country['nativeName'],
@@ -56,6 +59,28 @@ class AddressSeeder extends Seeder
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
+
+                    for ($x = 1 ; $x <= 5 ; $x++) {
+                        $cityId = DB::table('cities')->insertGetId([
+                            'country_id' => $countryId,
+                            'zipcode' => $faker->postcode(),
+                            'name' => $faker->city(),
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]);
+
+                        for ($y = 1 ; $y <= 5 ; $y++) {
+                            DB::table('addresses')->insert([
+                                'city_id' => $cityId,
+                                'road' => $faker->streetName(),
+                                'road_num' => $faker->buildingNumber(),
+                                'apartment_floor' => $faker->randomElement([null, $faker->numberBetween(0, 40)]),
+                                'apartment_num' => $faker->randomElement([null, $faker->numberBetween(0, 300)]),
+                                'created_at' => Carbon::now(),
+                                'updated_at' => Carbon::now(),
+                            ]);
+                        }
+                    }
                 }
             }
         }
