@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $addressSeeder = new AddressSeeder();
+        $addressSeeder->run();
         // \App\Models\User::factory(10)->create();
     }
 }
