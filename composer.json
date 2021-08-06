@@ -12,7 +12,8 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
       "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+      "ext-pdo": "*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
