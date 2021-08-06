@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\Pure;
+
 require('IAbstractOrm.php');
 
 abstract class AbstractOrm implements IAbstractOrm
@@ -7,6 +9,14 @@ abstract class AbstractOrm implements IAbstractOrm
     protected static PDO $pdo;
     protected static string $primaryKey = 'id';
     protected static string $table;
+
+    /**
+     * Loading options.
+     */
+    const
+        LOAD_BY_PK = 1,
+        LOAD_BY_ARRAY = 2,
+        LOAD_EMPTY = 3;
 
     /**
      * Executed just after the record has loaded.
@@ -24,10 +34,24 @@ abstract class AbstractOrm implements IAbstractOrm
      * @param mixed $data
      * @param integer $method
      * @return void
+     * @throws Exception
      */
-    final public function __construct($data = null)
+    final public function __construct(mixed $data = null, int $method = self::LOAD_EMPTY)
     {
-        // TODO: Implement __construct() method.
+        switch ($method) {
+            case self::LOAD_BY_PK:
+                $this->loadByPK($data);
+                break;
+
+            case self::LOAD_BY_ARRAY:
+                $this->loadByArray($data);
+                break;
+
+            case self::LOAD_EMPTY:
+                $this->generateEmpty();
+                break;
+        }
+
         $this->initialise();
     }
 
@@ -36,7 +60,9 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public static function retrieveByPK(int $pk): object
     {
-        // TODO: Implement retrieveByPK() method.
+        $reflectionObj = new ReflectionClass(static::class);
+
+        return $reflectionObj->newInstanceArgs([$pk, self::LOAD_BY_PK]);
     }
 
     /**
@@ -56,15 +82,148 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
 
+    /**
+     * Load by Primary Key
+     *
+     * @access private
+     * @param int $id
+     * @return void
+     * @throws Exception
+     */
+    private function loadByPK(int $id): void
+    {
+        // populate PK
+        $this->{self::getTablePk()} = $id;
+
+        // load data
+        $this->generateFromDatabase();
+    }
+
+    /**
+     * Fetch the data from the database.
+     *
+     * @access private
+     * @return void
+     * @throws Exception If the record is not found.
+     */
+    private function generateFromDatabase(): void
+    {
+        $stmt = self::getConn()->prepare(
+            sprintf(
+                "SELECT * FROM `%s` WHERE `%s` = :id;",
+                self::getTableName(),
+                self::getTablePk()
+            )
+        );
+        $id = $this->getId();
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($row)) {
+            throw new Exception(sprintf("%s record not found in database. (PK: %s)", static::class, $id));
+        }
+
+        foreach ($row as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
+
+    /**
+     * Load by array.
+     *
+     * @access private
+     * @param array $data
+     * @return void
+     */
+    private function loadByArray(array $data): void
+    {
+        // set our data
+        foreach ($this->$data as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
+
+    /**
+     * Generate object with null values.
+     * Fetches column names using DESCRIBE.
+     *
+     * @access private
+     * @return void
+     * @throws Exception
+     */
+    private function generateEmpty(): void
+    {
+        foreach ($this->getColumnNames() as $field) {
+            $this->{$field} = null;
+        }
+    }
 
 
+    /**
+     * Get the table name for class.
+     *
+     * @access private
+     * @static
+     * @return string
+     * @throws Exception
+     */
+    private static function getTableName(): string
+    {
+        return static::$table ?? throw new Exception('Table not defined.');
+    }
 
+    /**
+     * Get the PK field name for class.
+     *
+     * @access private
+     * @static
+     * @return string
+     */
+    private static function getTablePk(): string
+    {
+        return static::$primaryKey;
+    }
 
+    /**
+     * Get the PK field name for class.
+     *
+     * @access private
+     * @static
+     * @return int
+     */
+    #[Pure] private function getId(): int
+    {
+        return $this->{static::getTablePk()};
+    }
 
+    /**
+     * Fetch column names directly from Database.
+     *
+     * @access private
+     * @return array
+     * @throws Exception
+     */
+    private function getColumnNames(): array
+    {
+        $stmt = self::getConn()->query(
+            sprintf(
+                "DESCRIBE %s;",
+                self::getTableName()
+            )
+        );
 
+        if ($stmt === false) {
+            throw new Exception('Unable to fetch the column names.');
+        }
 
+        $columns = [];
+        foreach ($stmt as $row) {
+            $columns[] = $row['Field'];
+        }
 
-
+        return $columns;
+    }
 
 
 
