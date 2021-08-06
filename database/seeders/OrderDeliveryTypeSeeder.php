@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class OrderDeliveryTypeSeeder extends Seeder
 {
@@ -13,6 +16,14 @@ class OrderDeliveryTypeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $faker = Factory::create();
+
+        for ($x = 1 ; $x <= 5 ; $x++) {
+            DB::table('order_delivery_types')->insert([
+                'name' => 'Delivery-Type: ' . $faker->word(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }

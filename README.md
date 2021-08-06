@@ -113,14 +113,12 @@ alter table `employees` add constraint `employees_login_id_foreign` foreign key 
 create table `orders` (
     `id` bigint unsigned not null auto_increment primary key, 
     `customer_id` bigint unsigned not null, 
-    `order_delivery_id` bigint unsigned not null, 
     `extra_info` varchar(255) null, 
     `status` enum('NOT ORDERED', 'ORDER PLACED', 'ORDER ACCEPTED', 'ORDER SEND') not null, 
     `created_at` timestamp null, 
     `updated_at` timestamp null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 alter table `orders` add constraint `orders_customer_id_foreign` foreign key (`customer_id`) references `customers` (`id`);
-alter table `orders` add constraint `orders_order_delivery_id_foreign` foreign key (`order_delivery_id`) references `order_deliveries` (`id`);
 
 
 create table `order_items` (
@@ -175,7 +173,7 @@ create table `items` (
     `id` bigint unsigned not null auto_increment primary key, 
     `location_id` bigint unsigned not null, 
     `product_id` bigint unsigned not null, 
-    `discount_price` bigint not null, 
+    `discount_price` bigint null, 
     `status` enum('IN INVENTORY', 'RESERVED', 'ORDER PLACED', 'PURCHASED') not null, 
     `created_at` timestamp null, 
     `updated_at` timestamp null

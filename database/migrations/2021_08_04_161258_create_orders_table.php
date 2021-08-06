@@ -16,7 +16,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained();
-            $table->foreignId('order_delivery_id')->constrained();
             $table->string('extra_info', 255)->nullable();
             $table->enum('status', ['NOT ORDERED', 'ORDER PLACED', 'ORDER ACCEPTED', 'ORDER SEND']);
             $table->timestamps();

@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->foreignId('location_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->bigInteger('discount_price');
+            $table->bigInteger('discount_price')->nullable();
             $table->enum('status', ['IN INVENTORY', 'RESERVED', 'ORDER PLACED', 'PURCHASED']);
             $table->timestamps();
         });
