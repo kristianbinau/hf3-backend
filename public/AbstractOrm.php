@@ -70,7 +70,38 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public static function retrieveByField(string $field, mixed $value, int $return = self::FETCH_MANY): object|array
     {
-        // TODO: Implement retrieveByField() method.
+        $sql = sprintf(
+            "SELECT %s FROM %s WHERE :field = :value",
+            self::getTablePk(),
+            self::getTableName()
+        );
+
+        if ($return === self::FETCH_ONE) {
+            $sql .= ' LIMIT 0,1';
+        }
+
+        $stmt = self::getConn()->prepare($sql);
+        $stmt->bindParam(':field', $field, PDO::PARAM_STR);
+        $stmt->bindParam(':value', $value, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt === false) {
+            throw new Exception('Unable to fetch the column names.');
+        }
+
+        $ids = [];
+        foreach ($stmt as $row) {
+            $ids[] = $row[self::getTablePk()];
+        }
+
+        $rows = [];
+        foreach ($ids as $id) {
+            $reflectionObj = new ReflectionClass(static::class);
+
+            $rows[] =  $reflectionObj->newInstanceArgs([$id, self::LOAD_BY_PK]);
+        }
+
+        return $rows;
     }
 
     /**
@@ -92,10 +123,8 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     private function loadByPK(int $id): void
     {
-        // populate PK
         $this->{self::getTablePk()} = $id;
 
-        // load data
         $this->generateFromDatabase();
     }
 
