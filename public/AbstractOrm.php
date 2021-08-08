@@ -103,36 +103,50 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public function save(): void
     {
-        //$sql = "INSERT INTO users (name, surname, sex) VALUES (?,?,?)";
-        //$stmt= $pdo->prepare($sql);
-        //$stmt->execute([$name, $surname, $sex]);
-
-
-        $columnData = [];
         $columnNames = $this->getColumnNames();
 
-
-
+        $insertColumns = [];
+        $insertData = [];
         if ($this->isNew()) {
+            foreach ($columnNames as $columnName) {
+                switch (gettype($this->{$columnName})) {
+                    case 'string':
+                    case 'integer':
+                    case 'boolean':
+                        break;
+
+                    default:
+                        continue 2; // Continue foreach
+                }
+
+                $insertColumns[] = $columnName;
+                $insertData[] = ':' . $columnName;
+            }
+
+            $insertColumns = implode(', ', $insertColumns);
+            $insertData = implode(', ', $insertData);
+
             $stmt = self::getConn()->prepare(
                 sprintf(
-                    "INSERT INTO `%s` (name, surname, sex) VALUES (?,?,?)",
+                    "INSERT INTO `%s` (%s) VALUES (%s)",
                     self::getTableName(),
+                    $insertColumns,
+                    $insertData
                 )
             );
 
-            foreach($columnNames as $columnName) {
+            foreach ($columnNames as $columnName) {
                 switch (gettype($this->{$columnName})) {
                     case 'string':
-                        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_STR);
                         break;
 
                     case 'integer':
-                        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_INT);
                         break;
 
                     case 'boolean':
-                        $stmt->bindParam(':id', $id, PDO::PARAM_BOOL);
+                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_BOOL);
                         break;
 
                     default:
@@ -140,21 +154,12 @@ abstract class AbstractOrm implements IAbstractOrm
                 }
             }
 
-            $id = $this->getId();
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $id = self::getConn()->lastInsertId();
 
-            if (empty($row)) {
-                throw new Exception(sprintf("%s record not found in database. (PK: %s)", static::class, $id));
-            }
+            $this->id = $id;
 
-            foreach ($row as $key => $value) {
-                $this->{$key} = $value;
-            }
-
-        }
-        else {
+        } else {
             $this->update();
         }
     }

@@ -18,6 +18,7 @@ foreach($productTypes2 as $productType2) {
 
 $emptyProductType = new ProductType();
 $emptyProductType->name = 'James';
-echo $emptyProductType->name;
+$emptyProductType->description = 'James is cool';
 $emptyProductType->save();
-
+echo $emptyProductType->id;
+echo $emptyProductType->name;
