@@ -19,9 +19,9 @@ interface IAbstractOrm
      * Retrieve a record by its primary key (PK).
      *
      * @access public
+     * @static
      * @param int $pk
      * @return Object
-     * @throws ReflectionException
      */
     public static function retrieveByPK(int $pk): object;
 

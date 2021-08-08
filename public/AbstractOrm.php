@@ -10,13 +10,14 @@ abstract class AbstractOrm implements IAbstractOrm
     protected static string $primaryKey = 'id';
     protected static string $table;
 
+    private bool $isNew = false;
+
     /**
      * Loading options.
      */
-    const
+    public const
         LOAD_BY_PK = 1,
-        LOAD_BY_ARRAY = 2,
-        LOAD_EMPTY = 3;
+        LOAD_EMPTY = 2;
 
     /**
      * Executed just after the record has loaded.
@@ -43,10 +44,6 @@ abstract class AbstractOrm implements IAbstractOrm
                 $this->loadByPK($data);
                 break;
 
-            case self::LOAD_BY_ARRAY:
-                $this->loadByArray($data);
-                break;
-
             case self::LOAD_EMPTY:
                 $this->generateEmpty();
                 break;
@@ -57,6 +54,7 @@ abstract class AbstractOrm implements IAbstractOrm
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
      */
     public static function retrieveByPK(int $pk): object
     {
@@ -67,13 +65,16 @@ abstract class AbstractOrm implements IAbstractOrm
 
     /**
      * @inheritDoc
+     * @throws Exception
+     * @throws ReflectionException
      */
     public static function retrieveByField(string $field, mixed $value, int $return = self::FETCH_MANY): object|array
     {
         $sql = sprintf(
-            "SELECT %s FROM %s WHERE :field = :value",
+            "SELECT %s FROM %s WHERE %s = :value",
             self::getTablePk(),
-            self::getTableName()
+            self::getTableName(),
+            $field
         );
 
         if ($return === self::FETCH_ONE) {
@@ -81,7 +82,6 @@ abstract class AbstractOrm implements IAbstractOrm
         }
 
         $stmt = self::getConn()->prepare($sql);
-        $stmt->bindParam(':field', $field, PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -89,16 +89,9 @@ abstract class AbstractOrm implements IAbstractOrm
             throw new Exception('Unable to fetch the column names.');
         }
 
-        $ids = [];
-        foreach ($stmt as $row) {
-            $ids[] = $row[self::getTablePk()];
-        }
-
         $rows = [];
-        foreach ($ids as $id) {
-            $reflectionObj = new ReflectionClass(static::class);
-
-            $rows[] =  $reflectionObj->newInstanceArgs([$id, self::LOAD_BY_PK]);
+        foreach ($stmt as $row) {
+            $rows[] = self::retrieveByPK($row[self::getTablePk()]);
         }
 
         return $rows;
@@ -106,10 +99,64 @@ abstract class AbstractOrm implements IAbstractOrm
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function save(): void
     {
-        // TODO: Implement save() method.
+        //$sql = "INSERT INTO users (name, surname, sex) VALUES (?,?,?)";
+        //$stmt= $pdo->prepare($sql);
+        //$stmt->execute([$name, $surname, $sex]);
+
+
+        $columnData = [];
+        $columnNames = $this->getColumnNames();
+
+
+
+        if ($this->isNew()) {
+            $stmt = self::getConn()->prepare(
+                sprintf(
+                    "INSERT INTO `%s` (name, surname, sex) VALUES (?,?,?)",
+                    self::getTableName(),
+                )
+            );
+
+            foreach($columnNames as $columnName) {
+                switch (gettype($this->{$columnName})) {
+                    case 'string':
+                        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+                        break;
+
+                    case 'integer':
+                        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                        break;
+
+                    case 'boolean':
+                        $stmt->bindParam(':id', $id, PDO::PARAM_BOOL);
+                        break;
+
+                    default:
+                        continue 2; // Continue foreach
+                }
+            }
+
+            $id = $this->getId();
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (empty($row)) {
+                throw new Exception(sprintf("%s record not found in database. (PK: %s)", static::class, $id));
+            }
+
+            foreach ($row as $key => $value) {
+                $this->{$key} = $value;
+            }
+
+        }
+        else {
+            $this->update();
+        }
     }
 
 
@@ -159,21 +206,6 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
     /**
-     * Load by array.
-     *
-     * @access private
-     * @param array $data
-     * @return void
-     */
-    private function loadByArray(array $data): void
-    {
-        // set our data
-        foreach ($this->$data as $key => $value) {
-            $this->{$key} = $value;
-        }
-    }
-
-    /**
      * Generate object with null values.
      * Fetches column names using DESCRIBE.
      *
@@ -186,6 +218,8 @@ abstract class AbstractOrm implements IAbstractOrm
         foreach ($this->getColumnNames() as $field) {
             $this->{$field} = null;
         }
+
+        $this->isNew = true;
     }
 
 
@@ -255,14 +289,16 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
 
-
-
-
-
-
-
-
-
+    /**
+     * Check if new
+     *
+     * @access public
+     * @return boolean
+     */
+    #[Pure] protected function isNew(): bool
+    {
+        return $this->isNew;
+    }
 
 
     /**
