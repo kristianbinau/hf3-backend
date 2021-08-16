@@ -124,6 +124,8 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
 
+    /** Construct new instances. */
+
     /**
      * Fetch the data from the database.
      *
@@ -171,6 +173,8 @@ abstract class AbstractOrm implements IAbstractOrm
         $this->isNew = true;
     }
 
+
+    /** Insert and update instances. */
 
     /**
      * Insert into DB from properties of $this.
@@ -298,6 +302,8 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
 
+    /** Get info about instances. */
+
     /**
      * Get the table name for class.
      *
@@ -357,11 +363,13 @@ abstract class AbstractOrm implements IAbstractOrm
      * @access public
      * @return boolean
      */
-    #[Pure] protected function isNew(): bool
+    protected function isNew(): bool
     {
         return $this->isNew;
     }
 
+
+    /** Database connection. */
 
     /**
      * @access public
