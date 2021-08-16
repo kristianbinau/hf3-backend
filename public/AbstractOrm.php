@@ -6,10 +6,12 @@ require('IAbstractOrm.php');
 
 abstract class AbstractOrm implements IAbstractOrm
 {
+    /**
+     * Orm properties.
+     */
     protected static PDO $pdo;
     protected static string $primaryKey = 'id';
     protected static string $table;
-
     private bool $isNew = false;
 
     /**
@@ -41,15 +43,39 @@ abstract class AbstractOrm implements IAbstractOrm
     {
         switch ($method) {
             case self::LOAD_BY_PK:
-                $this->loadByPK($data);
+                $this->buildById($data);
                 break;
 
             case self::LOAD_EMPTY:
-                $this->generateEmpty();
+                $this->buildEmpty();
                 break;
         }
 
         $this->initialise();
+    }
+
+    /**
+     * @inheritDoc
+     * @throws Exception
+     */
+    public function save(): void
+    {
+        if ($this->isNew()) {
+            $this->insert();
+        } else {
+            $this->update();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(): void
+    {
+        $sql = 'DELETE FROM users WHERE id=:id';
+        $stmt= self::getConn()->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     /**
@@ -71,7 +97,7 @@ abstract class AbstractOrm implements IAbstractOrm
     public static function retrieveByField(string $field, mixed $value, int $return = self::FETCH_MANY): object|array
     {
         $sql = sprintf(
-            "SELECT %s FROM %s WHERE %s = :value",
+            'SELECT %s FROM %s WHERE %s = :value',
             self::getTablePk(),
             self::getTableName(),
             $field
@@ -97,112 +123,30 @@ abstract class AbstractOrm implements IAbstractOrm
         return $rows;
     }
 
-    /**
-     * @inheritDoc
-     * @throws Exception
-     */
-    public function save(): void
-    {
-        $columnNames = $this->getColumnNames();
-
-        $insertColumns = [];
-        $insertData = [];
-        if ($this->isNew()) {
-            foreach ($columnNames as $columnName) {
-                switch (gettype($this->{$columnName})) {
-                    case 'string':
-                    case 'integer':
-                    case 'boolean':
-                        break;
-
-                    default:
-                        continue 2; // Continue foreach
-                }
-
-                $insertColumns[] = $columnName;
-                $insertData[] = ':' . $columnName;
-            }
-
-            $insertColumns = implode(', ', $insertColumns);
-            $insertData = implode(', ', $insertData);
-
-            $stmt = self::getConn()->prepare(
-                sprintf(
-                    "INSERT INTO `%s` (%s) VALUES (%s)",
-                    self::getTableName(),
-                    $insertColumns,
-                    $insertData
-                )
-            );
-
-            foreach ($columnNames as $columnName) {
-                switch (gettype($this->{$columnName})) {
-                    case 'string':
-                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_STR);
-                        break;
-
-                    case 'integer':
-                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_INT);
-                        break;
-
-                    case 'boolean':
-                        $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_BOOL);
-                        break;
-
-                    default:
-                        continue 2; // Continue foreach
-                }
-            }
-
-            $stmt->execute();
-            $id = self::getConn()->lastInsertId();
-
-            $this->id = $id;
-
-        } else {
-            $this->update();
-        }
-    }
-
 
     /**
-     * Load by Primary Key
+     * Fetch the data from the database.
      *
      * @access private
      * @param int $id
      * @return void
      * @throws Exception
      */
-    private function loadByPK(int $id): void
-    {
-        $this->{self::getTablePk()} = $id;
-
-        $this->generateFromDatabase();
-    }
-
-    /**
-     * Fetch the data from the database.
-     *
-     * @access private
-     * @return void
-     * @throws Exception If the record is not found.
-     */
-    private function generateFromDatabase(): void
+    private function buildById(int $id): void
     {
         $stmt = self::getConn()->prepare(
             sprintf(
-                "SELECT * FROM `%s` WHERE `%s` = :id;",
+                'SELECT * FROM `%s` WHERE `%s` = :id;',
                 self::getTableName(),
                 self::getTablePk()
             )
         );
-        $id = $this->getId();
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (empty($row)) {
-            throw new Exception(sprintf("%s record not found in database. (PK: %s)", static::class, $id));
+            throw new Exception(sprintf('%s record not found in database. (PK: %s)', static::class, $id));
         }
 
         foreach ($row as $key => $value) {
@@ -218,13 +162,139 @@ abstract class AbstractOrm implements IAbstractOrm
      * @return void
      * @throws Exception
      */
-    private function generateEmpty(): void
+    private function buildEmpty(): void
     {
         foreach ($this->getColumnNames() as $field) {
             $this->{$field} = null;
         }
 
         $this->isNew = true;
+    }
+
+
+    /**
+     * Insert into DB from properties of $this.
+     *
+     * @throws Exception
+     */
+    private function insert(): void
+    {
+        [$insertColumns, $insertData, $updateColumnsAndData] = $this->insertUpdatePDOStrings();
+
+        $sql = sprintf(
+            'INSERT INTO `%s` (%s) VALUES (%s)',
+            self::getTableName(),
+            $insertColumns,
+            $insertData
+        );
+
+        $stmt = self::getConn()->prepare($sql);
+        $this->insertUpdatePDOBinds($stmt);
+
+        $stmt->execute();
+        $id = self::getConn()->lastInsertId();
+
+        $this->id = $id;
+        $this->isNew = false;
+    }
+
+    /**
+     * Update DB from properties of $this.
+     *
+     * @throws Exception
+     */
+    private function update(): void
+    {
+        [$insertColumns, $insertData, $updateColumnsAndData] = $this->insertUpdatePDOStrings();
+
+        $sql = sprintf(
+            'UPDATE `%s` SET %s WHERE id=:id',
+            self::getTableName(),
+            $updateColumnsAndData
+        );
+
+        $stmt = self::getConn()->prepare($sql);
+        $this->insertUpdatePDOBinds($stmt);
+
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    /**
+     * Take table columns and create insert and update string for PDO.
+     *
+     * @access private
+     * @return array
+     * @throws Exception
+     */
+    private function insertUpdatePDOStrings(): array
+    {
+        $columnNames = $this->getColumnNames();
+
+        $insertColumns = [];
+        $insertData = [];
+        $updateColumnsAndData = [];
+
+        foreach ($columnNames as $columnName) {
+            if ($columnName === 'id') {
+                continue;
+            }
+
+            switch (gettype($this->{$columnName})) {
+                case 'string':
+                case 'integer':
+                case 'boolean':
+                    break;
+
+                default:
+                    continue 2; // Continue foreach
+            }
+
+            $insertColumns[] = $columnName;
+            $insertData[] = ':' . $columnName;
+            $updateColumnsAndData[] = $columnName . '=:' . $columnName;
+        }
+
+        $insertColumns = implode(', ', $insertColumns);
+        $insertData = implode(', ', $insertData);
+        $updateColumnsAndData = implode(', ', $updateColumnsAndData);
+
+        return [$insertColumns, $insertData, $updateColumnsAndData];
+    }
+
+    /**
+     * Take table columns and bind values for PDO..
+     *
+     * @access private
+     * @param PDOStatement $stmt
+     * @throws Exception
+     */
+    private function insertUpdatePDOBinds(PDOStatement $stmt): void
+    {
+        $columnNames = $this->getColumnNames();
+
+        foreach ($columnNames as $columnName) {
+            if ($columnName === 'id') {
+                continue;
+            }
+
+            switch (gettype($this->{$columnName})) {
+                case 'string':
+                    $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_STR);
+                    break;
+
+                case 'integer':
+                    $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_INT);
+                    break;
+
+                case 'boolean':
+                    $stmt->bindParam(':' . $columnName, $this->{$columnName}, PDO::PARAM_BOOL);
+                    break;
+
+                default:
+                    continue 2; // Continue foreach
+            }
+        }
     }
 
 
@@ -242,30 +312,6 @@ abstract class AbstractOrm implements IAbstractOrm
     }
 
     /**
-     * Get the PK field name for class.
-     *
-     * @access private
-     * @static
-     * @return string
-     */
-    private static function getTablePk(): string
-    {
-        return static::$primaryKey;
-    }
-
-    /**
-     * Get the PK field name for class.
-     *
-     * @access private
-     * @static
-     * @return int
-     */
-    #[Pure] private function getId(): int
-    {
-        return $this->{static::getTablePk()};
-    }
-
-    /**
      * Fetch column names directly from Database.
      *
      * @access private
@@ -276,7 +322,7 @@ abstract class AbstractOrm implements IAbstractOrm
     {
         $stmt = self::getConn()->query(
             sprintf(
-                "DESCRIBE %s;",
+                'DESCRIBE %s;',
                 self::getTableName()
             )
         );
@@ -293,6 +339,17 @@ abstract class AbstractOrm implements IAbstractOrm
         return $columns;
     }
 
+    /**
+     * Get the PK field name for class.
+     *
+     * @access private
+     * @static
+     * @return string
+     */
+    private static function getTablePk(): string
+    {
+        return static::$primaryKey;
+    }
 
     /**
      * Check if new
@@ -311,7 +368,7 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public static function setConn($host = 'mariadb', $db = 'example_app', $user = 'sail', $pass = 'password', $charset = 'utf8mb4'): void
     {
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // WHY THIS EWW, so close PDO
+        $dsn = 'mysql:host=$host;dbname=$db;charset=$charset'; // WHY THIS EWW, so close PDO
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -333,4 +390,4 @@ abstract class AbstractOrm implements IAbstractOrm
     {
         return self::$pdo;
     }
-}
+ }

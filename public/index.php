@@ -22,3 +22,12 @@ $emptyProductType->description = 'James is cool';
 $emptyProductType->save();
 echo $emptyProductType->id;
 echo $emptyProductType->name;
+$emptyProductType->name = 'BEBEBEBEBE';
+$emptyProductType->save();
+
+$productType3 = ProductType::retrieveByPK($emptyProductType->id);
+
+echo $productType3->id;
+echo $productType3->name;
+
+$productType3->delete();

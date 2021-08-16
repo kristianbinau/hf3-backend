@@ -44,4 +44,12 @@ interface IAbstractOrm
      * @return void
      */
     public function save(): void;
+
+    /**
+     * Delete from the database.
+     *
+     * @access public
+     * @return void
+     */
+    public function delete(): void;
 }
