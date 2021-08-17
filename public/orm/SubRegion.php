@@ -9,6 +9,6 @@ class SubRegion extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->region = Region::retrieveByPK($this->region_id);
     }
 }

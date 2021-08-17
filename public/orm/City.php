@@ -9,6 +9,6 @@ class City extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->country = Country::retrieveByPK($this->country_id);
     }
 }

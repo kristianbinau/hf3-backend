@@ -9,6 +9,6 @@ class Location extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->departments = Department::retrieveByField('location_id', $this->id);
     }
 }

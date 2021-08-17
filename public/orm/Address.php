@@ -9,6 +9,6 @@ class Address extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->city = City::retrieveByPK($this->city_id);
     }
 }

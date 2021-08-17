@@ -9,6 +9,6 @@ class Country extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->subRegion = SubRegion::retrieveByPK($this->sub_region_id);
     }
 }

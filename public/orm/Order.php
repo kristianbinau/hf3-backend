@@ -9,6 +9,8 @@ class Order extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->orderItems = OrderItem::retrieveByField('order_id', $this->id);
+        $this->orderDiscounts = OrderDiscount::retrieveByField('order_id', $this->id);
+        $this->orderDeliveries = OrderDelivery::retrieveByField('order_id', $this->id, self::FETCH_ONE);
     }
 }

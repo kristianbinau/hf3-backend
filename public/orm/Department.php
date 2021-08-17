@@ -9,6 +9,6 @@ class Department extends AbstractOrm
      */
     public function initialise(): void
     {
-        // TODO: Implement initialise() method.
+        $this->employees = Employee::retrieveByField('department_id', $this->id);
     }
 }
