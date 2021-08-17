@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Region",
+ *     description="",
+ * )
+ */
 class RegionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/regions",
+     *      operationId="index",
+     *      tags={"Region"},
+     *      summary="Get list of regions",
+     *      description="Returns list of regions",
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(Region::select('*')->paginate(500));
     }
 
     /**

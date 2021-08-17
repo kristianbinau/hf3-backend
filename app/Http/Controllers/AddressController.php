@@ -5,40 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use Illuminate\Http\Request;
 
+/**
+* @OA\Tag(
+ *     name="Addresses",
+ *     description="",
+ * )
+ */
 class AddressController extends Controller
 {
     /**
-     * @OA\Get(
-     *      path="/projects",
-     *      operationId="getProjectsList",
-     *      tags={"Projects"},
-     *      summary="Get list of projects",
-     *      description="Returns list of projects",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation"
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
-     *       security={
-     *           {"api_key_security_example": {}}
-     *       }
-     *     )
+     * Display a listing of the resource.
      *
-     * Returns list of projects
-     */
-
-    /**
+     * @return \Illuminate\Http\Response
+     *
      * @OA\Get(
-     *      path="/projects/{id}",
-     *      operationId="getProjectById",
-     *      tags={"Projects"},
-     *      summary="Get project information",
-     *      description="Returns project data",
+     *      path="/api/addresses",
+     *      operationId="index",
+     *      tags={"Addresses"},
+     *      summary="Get list of addresses",
+     *      description="Returns list of addresses",
      *      @OA\Parameter(
-     *          name="id",
-     *          description="Project id",
-     *          required=true,
-     *          in="path",
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -47,37 +37,13 @@ class AddressController extends Controller
      *          response=200,
      *          description="successful operation"
      *       ),
-     *      @OA\Response(response=400, description="Bad request"),
-     *      @OA\Response(response=404, description="Resource Not Found"),
-     *      security={
-     *         {
-     *             "oauth2_security_example": {"write:projects", "read:projects"}
-     *         }
-     *     },
-     * )
-     */
-
-
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @OA\Get(
-     *      path="/addresses",
-     *      operationId="index",
-     *      tags={"addresses"},
-     *      summary="Get list of addresses",
-     *      description="Returns list of addresses",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation"
-     *       ),
      *       @OA\Response(
      *          response=400,
      *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
      *       ),
      *       security={
      *           {"api_key_security_example": {}}
@@ -86,7 +52,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
+        return Response(Address::select('*')->paginate(500));
     }
 
     /**
@@ -115,6 +81,40 @@ class AddressController extends Controller
      *
      * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/projects/{id}",
+     *      operationId="getProjectById",
+     *      tags={"Projects"},
+     *      summary="Get project information",
+     *      description="Returns project data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Project id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *      security={
+     *         {
+     *             "oauth2_security_example": {"write:projects", "read:projects"}
+     *         }
+     *     },
+     * )
      */
     public function show(Address $address)
     {

@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Departments",
+ *     description="",
+ * )
+ */
 class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/departments",
+     *      operationId="index",
+     *      tags={"Departments"},
+     *      summary="Get list of departments",
+     *      description="Returns list of departments",
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(Department::select('*')->paginate(500));
     }
 
     /**

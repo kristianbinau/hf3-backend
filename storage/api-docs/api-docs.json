@@ -9,20 +9,34 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/projects": {
+        "/api/addresses": {
             "get": {
                 "tags": [
-                    "Projects"
+                    "Addresses"
                 ],
-                "summary": "Get list of projects",
-                "description": "Returns list of projects",
-                "operationId": "getProjectsList",
+                "summary": "Get list of addresses",
+                "description": "Returns list of addresses",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 },
                 "security": [
@@ -72,20 +86,34 @@
                 ]
             }
         },
-        "/projfefeects": {
+        "/api/cities": {
             "get": {
                 "tags": [
-                    "Projeefefcts"
+                    "Cities"
                 ],
-                "summary": "Get list of proefefejects",
-                "description": "Returns list of projects",
-                "operationId": "getProjecfefeftsList",
+                "summary": "Get list of cities",
+                "description": "Returns list of cities",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 },
                 "security": [
@@ -95,19 +123,316 @@
                 ]
             }
         },
-        "/frijfef/{id}": {
+        "/api/counties": {
             "get": {
                 "tags": [
-                    "Projfefeects"
+                    "Counties"
                 ],
-                "summary": "Get project fefefef",
-                "description": "Returns prfefoject data",
-                "operationId": "defe",
+                "summary": "Get list of counties",
+                "description": "Returns list of counties",
+                "operationId": "index",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/customers": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get list of customers",
+                "description": "Returns list of customers",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/departments": {
+            "get": {
+                "tags": [
+                    "Departments"
+                ],
+                "summary": "Get list of departments",
+                "description": "Returns list of departments",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/employees": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Get list of employees",
+                "description": "Returns list of employees",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/items": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get list of items",
+                "description": "Returns list of items",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/locations": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get list of locations",
+                "description": "Returns list of locations",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/manufacturers": {
+            "get": {
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Get list of manufacturers",
+                "description": "Returns list of manufacturers",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get list of orders",
+                "description": "Returns list of orders",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{orderId}/deliveries": {
+            "get": {
+                "tags": [
+                    "Orders",
+                    "OrderDeliveries"
+                ],
+                "summary": "Get list of order deliveries",
+                "description": "Returns list of order deliveries",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "orderId",
                         "in": "path",
-                        "description": "Project id",
+                        "description": "Order Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -127,15 +452,359 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:projects",
-                            "read:projects"
-                        ]
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{orderId}/deliveries/{deliveryId}": {
+            "get": {
+                "tags": [
+                    "Orders",
+                    "OrderDeliveries",
+                    "OrderDeliveryTypes"
+                ],
+                "summary": "Get list of order delivery types",
+                "description": "Returns list of  order delivery types",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "deliveryId",
+                        "in": "path",
+                        "description": "Delivery Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{orderId}/discounts": {
+            "get": {
+                "tags": [
+                    "Orders",
+                    "OrderDiscounts"
+                ],
+                "summary": "Get list of order discounts",
+                "description": "Returns list of order discounts",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{orderId}/items": {
+            "get": {
+                "tags": [
+                    "Orders",
+                    "OrderItems"
+                ],
+                "summary": "Get list of order items",
+                "description": "Returns list of order items",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns list of products",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/products/{productId}/types": {
+            "get": {
+                "tags": [
+                    "Products",
+                    "ProductTypes"
+                ],
+                "summary": "Get list of product types",
+                "description": "Returns list of product types",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Product Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/regions": {
+            "get": {
+                "tags": [
+                    "Region"
+                ],
+                "summary": "Get list of regions",
+                "description": "Returns list of regions",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/subregion": {
+            "get": {
+                "tags": [
+                    "SubRegion"
+                ],
+                "summary": "Get list of subregion",
+                "description": "Returns list of subregion",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
                     }
                 ]
             }
         }
     },
+    "tags": [
+        {
+            "name": "Addresses",
+            "description": ""
+        },
+        {
+            "name": "Cities",
+            "description": ""
+        },
+        {
+            "name": "Counties",
+            "description": ""
+        },
+        {
+            "name": "Customers",
+            "description": ""
+        },
+        {
+            "name": "Departments",
+            "description": ""
+        },
+        {
+            "name": "Employees",
+            "description": ""
+        },
+        {
+            "name": "Items",
+            "description": ""
+        },
+        {
+            "name": "Locations",
+            "description": ""
+        },
+        {
+            "name": "Manufacturers",
+            "description": ""
+        },
+        {
+            "name": "Orders",
+            "description": ""
+        },
+        {
+            "name": "OrderDeliveries",
+            "description": ""
+        },
+        {
+            "name": "OrderDeliveryTypes",
+            "description": ""
+        },
+        {
+            "name": "OrderDiscounts",
+            "description": ""
+        },
+        {
+            "name": "OrderItems",
+            "description": ""
+        },
+        {
+            "name": "Products",
+            "description": ""
+        },
+        {
+            "name": "ProductTypes",
+            "description": ""
+        },
+        {
+            "name": "Region",
+            "description": ""
+        },
+        {
+            "name": "SubRegion",
+            "description": ""
+        }
+    ],
     "security": [
         []
     ]

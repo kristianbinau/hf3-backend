@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\OrderDelivery;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="OrderDeliveries",
+ *     description="",
+ * )
+ */
 class OrderDeliveryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders/{orderId}/deliveries",
+     *      operationId="index",
+     *      tags={"Orders","OrderDeliveries"},
+     *      summary="Get list of order deliveries",
+     *      description="Returns list of order deliveries",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(OrderDelivery::select('*')->paginate(500));
     }
 
     /**

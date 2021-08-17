@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Products",
+ *     description="",
+ * )
+ */
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/products",
+     *      operationId="index",
+     *      tags={"Products"},
+     *      summary="Get list of products",
+     *      description="Returns list of products",
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(Product::select('*')->paginate(500));
     }
 
     /**

@@ -1,5 +1,25 @@
 <?php
 
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerOrderController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\LocationItemController;
+use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDeliveryController;
+use App\Http\Controllers\OrderDeliveryTypeController;
+use App\Http\Controllers\OrderDiscountController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\SubRegionController;
+use Database\Seeders\ProductTypeSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +34,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('addresses', AddressController::class);
+Route::apiResource('cities', CityController::class);
+Route::apiResource('counties', CountryController::class);
+Route::apiResource('subregions', SubRegionController::class);
+Route::apiResource('regions', RegionController::class);
+
+Route::apiResource('items', ItemController::class);
+Route::apiResource('products', ProductController::class);
+Route::apiResource('products.types', ProductTypeSeeder::class);
+Route::apiResource('products.manufacturers', ManufacturerController::class)->shallow();
+
+Route::apiResource('locations', LocationController::class);
+Route::apiResource('locations.departments', DepartmentController::class)->shallow();;
+Route::apiResource('locations.departments.employees', EmployeeController::class)->shallow();;
+Route::apiResource('locations.items', LocationItemController::class);
+
+Route::apiResource('orders', OrderController::class);
+Route::apiResource('orders.items', OrderItemController::class);
+Route::apiResource('orders.deliveries', OrderDeliveryController::class);
+Route::apiResource('orders.deliveries.types', OrderDeliveryTypeController::class);
+Route::apiResource('orders.discounts', OrderDiscountController::class);
+
+Route::apiResource('customers', CustomerController::class);
+Route::apiResource('customers.orders', CustomerOrderController::class)->shallow();

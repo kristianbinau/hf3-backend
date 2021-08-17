@@ -372,7 +372,7 @@ abstract class AbstractOrm implements IAbstractOrm
     /**
      * @access public
      */
-    public static function setConn($host = 'mariadb', $db = 'example_app', $user = 'sail', $pass = 'password', $charset = 'utf8mb4'): void
+    public static function setConn($host = 'mariadb', $db = 'hf3_backend', $user = 'sail', $pass = 'password', $charset = 'utf8mb4'): void
     {
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // WHY THIS EWW, so close PDO
         $options = [

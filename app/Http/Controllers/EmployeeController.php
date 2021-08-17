@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Employees",
+ *     description="",
+ * )
+ */
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/employees",
+     *      operationId="index",
+     *      tags={"Employees"},
+     *      summary="Get list of employees",
+     *      description="Returns list of employees",
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(Employee::select('*')->paginate(500));
     }
 
     /**

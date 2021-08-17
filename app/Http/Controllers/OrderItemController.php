@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="OrderItems",
+ *     description="",
+ * )
+ */
 class OrderItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders/{orderId}/items",
+     *      operationId="index",
+     *      tags={"Orders","OrderItems"},
+     *      summary="Get list of order items",
+     *      description="Returns list of order items",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(OrderItem::select('*')->paginate(500));
     }
 
     /**

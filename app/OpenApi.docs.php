@@ -1,5 +1,9 @@
 <?php
 /**
+ * @QA\Swagger(
+ *     basePath="/api",
+ * )
+ *
  * @OA\Info(
  *      version="1.0.0",
  *      title="HF3 Backend",

@@ -5,42 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Cities",
+ *     description="",
+ * )
+ */
 class CityController extends Controller
 {
-
-
     /**
-     * @OA\Get(
-     *      path="/projfefeects",
-     *      operationId="getProjecfefeftsList",
-     *      tags={"Projeefefcts"},
-     *      summary="Get list of proefefejects",
-     *      description="Returns list of projects",
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation"
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
-     *       security={
-     *           {"api_key_security_example": {}}
-     *       }
-     *     )
+     * Display a listing of the resource.
      *
-     * Returns list of projects
-     */
-
-    /**
+     * @return \Illuminate\Http\Response
+     *
      * @OA\Get(
-     *      path="/frijfef/{id}",
-     *      operationId="defe",
-     *      tags={"Projfefeects"},
-     *      summary="Get project fefefef",
-     *      description="Returns prfefoject data",
+     *      path="/api/cities",
+     *      operationId="index",
+     *      tags={"Cities"},
+     *      summary="Get list of cities",
+     *      description="Returns list of cities",
      *      @OA\Parameter(
-     *          name="id",
-     *          description="Project id",
-     *          required=true,
-     *          in="path",
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -49,24 +37,22 @@ class CityController extends Controller
      *          response=200,
      *          description="successful operation"
      *       ),
-     *      @OA\Response(response=400, description="Bad request"),
-     *      @OA\Response(response=404, description="Resource Not Found"),
-     *      security={
-     *         {
-     *             "oauth2_security_example": {"write:projects", "read:projects"}
-     *         }
-     *     },
-     * )
-     */
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(City::select('*')->paginate(500));
     }
 
     /**

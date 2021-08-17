@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Manufacturers",
+ *     description="",
+ * )
+ */
 class ManufacturerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/manufacturers",
+     *      operationId="index",
+     *      tags={"Manufacturers"},
+     *      summary="Get list of manufacturers",
+     *      description="Returns list of manufacturers",
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function index()
     {
-        //
+        return Response(Manufacturer::select('*')->paginate(500));
     }
 
     /**
