@@ -1,6 +1,8 @@
 <?php
 
-require('ProductType.php');
+require_once('orm/IAbstractOrm.php');
+require_once('orm/AbstractOrm.php');
+require_once('orm/ProductType.php');
 
 AbstractOrm::setConn();
 

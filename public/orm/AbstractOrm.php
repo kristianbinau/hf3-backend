@@ -2,8 +2,6 @@
 
 use JetBrains\PhpStorm\Pure;
 
-require('IAbstractOrm.php');
-
 abstract class AbstractOrm implements IAbstractOrm
 {
     /**
@@ -376,7 +374,7 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public static function setConn($host = 'mariadb', $db = 'example_app', $user = 'sail', $pass = 'password', $charset = 'utf8mb4'): void
     {
-        $dsn = 'mysql:host=$host;dbname=$db;charset=$charset'; // WHY THIS EWW, so close PDO
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // WHY THIS EWW, so close PDO
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -386,7 +384,7 @@ abstract class AbstractOrm implements IAbstractOrm
             $pdo = new PDO($dsn, $user, $pass, $options);
             self::$pdo = $pdo;
         } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            throw new \PDOException($e->getMessage(), $e->getCode());
         }
     }
 

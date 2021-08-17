@@ -1,10 +1,8 @@
 <?php
 
-require('AbstractOrm.php');
-
-class ProductType extends AbstractOrm
+class Customer extends AbstractOrm
 {
-    protected static string $table = 'product_types';
+    protected static string $table = 'customers';
 
     /**
      * @inheritDoc
