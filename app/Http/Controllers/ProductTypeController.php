@@ -13,7 +13,7 @@ class ProductTypeController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/products-types",
+     *      path="/api/product-types",
      *      operationId="ProductTypeController.index",
      *      tags={"Products"},
      *      summary="Get list of product types",
@@ -54,34 +54,13 @@ class ProductTypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/products-types/{productTypeId}",
+     *      path="/api/product-types/{productTypeId}",
      *      operationId="ProductTypeController.show",
      *      tags={"Products"},
      *      summary="Get product type",
@@ -118,40 +97,5 @@ class ProductTypeController extends Controller
     public function show(ProductType $productType)
     {
         return Response($productType);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProductType  $productType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductType $productType)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductType  $productType
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductType $productType)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProductType  $productType
-     * @return \Illuminate\Http\Response
-     *
-     */
-    public function destroy(ProductType $productType)
-    {
-        //
     }
 }

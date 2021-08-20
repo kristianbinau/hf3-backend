@@ -14,7 +14,7 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/locations/{locationId}/departments",
+     *      path="/api/location/{locationId}/departments",
      *      operationId="DepartmentController.index",
      *      tags={"Locations"},
      *      summary="Get list of departments in location",
@@ -61,16 +61,6 @@ class DepartmentController extends Controller
     public function index(Location $location)
     {
         return Response($location->departments()->paginate(500));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -173,17 +163,6 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Department $department)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -246,7 +225,7 @@ class DepartmentController extends Controller
      *
      * @OA\Delete(
      *      path="/api/departments/{departmentId}",
-     *      operationId="DepartmentController.show",
+     *      operationId="DepartmentController.destroy",
      *      tags={"Locations"},
      *      summary="Delete department",
      *      description="Deletes department and returns nothing",

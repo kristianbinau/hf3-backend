@@ -599,7 +599,7 @@
                 ]
             }
         },
-        "/api/customers/{customerId}/orders": {
+        "/api/customer/{customerId}/orders": {
             "get": {
                 "tags": [
                     "Customers"
@@ -649,7 +649,7 @@
                 ]
             }
         },
-        "/api/locations/{locationId}/departments": {
+        "/api/location/{locationId}/departments": {
             "get": {
                 "tags": [
                     "Locations"
@@ -782,7 +782,7 @@
                 ],
                 "summary": "Delete department",
                 "description": "Deletes department and returns nothing",
-                "operationId": "DepartmentController.show",
+                "operationId": "DepartmentController.destroy",
                 "parameters": [
                     {
                         "name": "departmentId",
@@ -853,7 +853,7 @@
                 ]
             }
         },
-        "/api/departments/{departmentId}/employees": {
+        "/api/department/{departmentId}/employees": {
             "get": {
                 "tags": [
                     "Locations"
@@ -986,7 +986,7 @@
                 ],
                 "summary": "Delete employee",
                 "description": "Deletes employee and returns nothing",
-                "operationId": "EmployeeController.show",
+                "operationId": "EmployeeController.destroy",
                 "parameters": [
                     {
                         "name": "employeeId",
@@ -1181,7 +1181,7 @@
                 ],
                 "summary": "Delete item",
                 "description": "Deletes item and returns nothing",
-                "operationId": "ItemController.show",
+                "operationId": "ItemController.destroy",
                 "parameters": [
                     {
                         "name": "itemId",
@@ -1376,7 +1376,7 @@
                 ],
                 "summary": "Delete location",
                 "description": "Deletes location and returns nothing",
-                "operationId": "LocationController.show",
+                "operationId": "LocationController.destroy",
                 "parameters": [
                     {
                         "name": "locationId",
@@ -1447,7 +1447,7 @@
                 ]
             }
         },
-        "/api/locations/{locationId}/items": {
+        "/api/location/{locationId}/items": {
             "get": {
                 "tags": [
                     "Locations"
@@ -1887,7 +1887,7 @@
                 ]
             }
         },
-        "/api/orders/{orderId}/deliveries": {
+        "/api/order/{orderId}/deliveries": {
             "get": {
                 "tags": [
                     "Orders"
@@ -1975,7 +1975,7 @@
                 ]
             }
         },
-        "/api/orders-deliveries/{orderDeliveryId}": {
+        "/api/order-deliveries/{orderDeliveryId}": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2020,7 +2020,7 @@
                 ],
                 "summary": "Delete order delivery",
                 "description": "Deletes order delivery and returns nothing",
-                "operationId": "OrderDeliveryController.show",
+                "operationId": "OrderDeliveryController.destroy",
                 "parameters": [
                     {
                         "name": "orderDeliveryId",
@@ -2091,7 +2091,7 @@
                 ]
             }
         },
-        "/api/orders-deliveries-types": {
+        "/api/order-delivery-types": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2120,7 +2120,7 @@
                 ]
             }
         },
-        "/api/orders-deliveries-types/{ordersDeliveriesTypeId}": {
+        "/api/order-delivery-types/{ordersDeliveriesTypeId}": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2160,7 +2160,7 @@
                 ]
             }
         },
-        "/api/orders/{orderId}/discounts": {
+        "/api/order/{orderId}/discounts": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2286,7 +2286,7 @@
                 ]
             }
         },
-        "/api/orders-discounts/{orderDiscountId}": {
+        "/api/order-discounts/{orderDiscountId}": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2364,7 +2364,7 @@
                 ]
             }
         },
-        "/api/orders/{orderId}/items": {
+        "/api/order/{orderId}/items": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2490,7 +2490,7 @@
                 ]
             }
         },
-        "/api/orders-items/{orderItemId}": {
+        "/api/order-items/{orderItemId}": {
             "get": {
                 "tags": [
                     "Orders"
@@ -2692,7 +2692,7 @@
                 ],
                 "summary": "Delete product",
                 "description": "Deletes product and returns nothing",
-                "operationId": "ProductController.show",
+                "operationId": "ProductController.destroy",
                 "parameters": [
                     {
                         "name": "productId",
@@ -2763,7 +2763,7 @@
                 ]
             }
         },
-        "/api/products-types": {
+        "/api/product-types": {
             "get": {
                 "tags": [
                     "Products"
@@ -2804,7 +2804,7 @@
                 ]
             }
         },
-        "/api/products-types/{productTypeId}": {
+        "/api/product-types/{productTypeId}": {
             "get": {
                 "tags": [
                     "Products"
@@ -2925,7 +2925,7 @@
                 ]
             }
         },
-        "/api/regions/{regionId}/sub-regions": {
+        "/api/region/{regionId}/sub-regions": {
             "get": {
                 "tags": [
                     "Addresses"
@@ -3056,7 +3056,7 @@
                 ]
             }
         },
-        "/api/sub-regions/{subRegionId}/countries": {
+        "/api/sub-region/{subRegionId}/countries": {
             "get": {
                 "tags": [
                     "Addresses"

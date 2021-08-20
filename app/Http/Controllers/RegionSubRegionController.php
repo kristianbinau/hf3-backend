@@ -14,7 +14,7 @@ class RegionSubRegionController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/regions/{regionId}/sub-regions",
+     *      path="/api/region/{regionId}/sub-regions",
      *      operationId="RegionSubRegionController.index",
      *      tags={"Addresses"},
      *      summary="Get list of sub regions in region",

@@ -15,7 +15,7 @@ class OrderDiscountController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders/{orderId}/discounts",
+     *      path="/api/order/{orderId}/discounts",
      *      operationId="OrderDiscountController.index",
      *      tags={"Orders"},
      *      summary="Get list of order discounts in order",
@@ -65,16 +65,6 @@ class OrderDiscountController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -82,7 +72,7 @@ class OrderDiscountController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Post(
-     *      path="/api/orders/{orderId}/discounts",
+     *      path="/api/order/{orderId}/discounts",
      *      operationId="OrderDiscountController.store",
      *      tags={"Orders"},
      *      summary="Store order discount in order",
@@ -138,7 +128,7 @@ class OrderDiscountController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders-discounts/{orderDiscountId}",
+     *      path="/api/order-discounts/{orderDiscountId}",
      *      operationId="OrderDiscountController.show",
      *      tags={"Orders"},
      *      summary="Get order discount",
@@ -178,17 +168,6 @@ class OrderDiscountController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OrderDiscount  $orderDiscount
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(OrderDiscount $orderDiscount)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -196,7 +175,7 @@ class OrderDiscountController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Patch(
-     *      path="/api/orders/{orderId}/discounts",
+     *      path="/api/order/{orderId}/discounts",
      *      operationId="OrderDiscountController.update",
      *      tags={"Orders"},
      *      summary="Store order discount in order",
@@ -251,7 +230,7 @@ class OrderDiscountController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Delete (
-     *      path="/api/orders-discounts/{orderDiscountId}",
+     *      path="/api/order-discounts/{orderDiscountId}",
      *      operationId="OrderDiscountController.show",
      *      tags={"Orders"},
      *      summary="Delete order discount",

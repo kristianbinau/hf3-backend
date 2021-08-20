@@ -13,7 +13,7 @@ class SubRegionCountryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/sub-regions/{subRegionId}/countries",
+     *      path="/api/sub-region/{subRegionId}/countries",
      *      operationId="SubRegionCountryController.index",
      *      tags={"Addresses"},
      *      summary="Get list of countries in sub regions",
@@ -59,7 +59,6 @@ class SubRegionCountryController extends Controller
      */
     public function index(SubRegion $subRegion)
     {
-        error_log(print_r($subRegion->name, true));
         return Response($subRegion->countries()->paginate(500));
     }
 }

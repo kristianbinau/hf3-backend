@@ -15,7 +15,7 @@ class OrderItemController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders/{orderId}/items",
+     *      path="/api/order/{orderId}/items",
      *      operationId="OrderItemController.index",
      *      tags={"Orders"},
      *      summary="Get list of order items in order",
@@ -65,16 +65,6 @@ class OrderItemController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -82,7 +72,7 @@ class OrderItemController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Post(
-     *      path="/api/orders/{orderId}/items",
+     *      path="/api/order/{orderId}/items",
      *      operationId="OrderItemController.store",
      *      tags={"Orders"},
      *      summary="Store order item in order",
@@ -139,7 +129,7 @@ class OrderItemController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders-items/{orderItemId}",
+     *      path="/api/order-items/{orderItemId}",
      *      operationId="OrderItemController.show",
      *      tags={"Orders"},
      *      summary="Get order item",
@@ -179,17 +169,6 @@ class OrderItemController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OrderItem  $orderItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(OrderItem $orderItem)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -197,7 +176,7 @@ class OrderItemController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Patch (
-     *      path="/api/orders/{orderId}/items",
+     *      path="/api/order/{orderId}/items",
      *      operationId="OrderItemController.update",
      *      tags={"Orders"},
      *      summary="Update order item",
@@ -252,7 +231,7 @@ class OrderItemController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Delete(
-     *      path="/api/orders-items/{orderItemId}",
+     *      path="/api/order-items/{orderItemId}",
      *      operationId="OrderItemController.show",
      *      tags={"Orders"},
      *      summary="Delete order item",

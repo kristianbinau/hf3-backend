@@ -15,7 +15,7 @@ class OrderDeliveryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders/{orderId}/deliveries",
+     *      path="/api/order/{orderId}/deliveries",
      *      operationId="OrderDeliveryController.index",
      *      tags={"Orders"},
      *      summary="Get list of order deliveries in order",
@@ -65,16 +65,6 @@ class OrderDeliveryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -82,7 +72,7 @@ class OrderDeliveryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Post(
-     *      path="/api/orders/{orderId}/deliveries",
+     *      path="/api/order/{orderId}/deliveries",
      *      operationId="OrderDeliveryController.store",
      *      tags={"Orders"},
      *      summary="Store order delivery in order",
@@ -141,7 +131,7 @@ class OrderDeliveryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders-deliveries/{orderDeliveryId}",
+     *      path="/api/order-deliveries/{orderDeliveryId}",
      *      operationId="OrderDeliveryController.show",
      *      tags={"Orders"},
      *      summary="Get order delivery",
@@ -181,17 +171,6 @@ class OrderDeliveryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OrderDelivery  $orderDelivery
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(OrderDelivery $orderDelivery)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -199,7 +178,7 @@ class OrderDeliveryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Patch(
-     *      path="/api/orders-deliveries/{orderDeliveryId}",
+     *      path="/api/order-deliveries/{orderDeliveryId}",
      *      operationId="OrderDeliveryController.update",
      *      tags={"Orders"},
      *      summary="Get order delivery",
@@ -257,8 +236,8 @@ class OrderDeliveryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Delete (
-     *      path="/api/orders-deliveries/{orderDeliveryId}",
-     *      operationId="OrderDeliveryController.show",
+     *      path="/api/order-deliveries/{orderDeliveryId}",
+     *      operationId="OrderDeliveryController.destroy",
      *      tags={"Orders"},
      *      summary="Delete order delivery",
      *      description="Deletes order delivery and returns nothing",

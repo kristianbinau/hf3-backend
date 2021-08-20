@@ -114,7 +114,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'login_id' => 'bail|required|integer|exists:logins,id|unique:customer,login_id|unique:employee,login_id',
+            'login_id' => 'bail|required|integer|exists:logins,id|unique:customers,login_id|unique:employees,login_id',
             'address_id' => 'bail|required|integer|exists:addresses,id',
             'name' => 'bail|required|max:255',
         ]);
@@ -226,7 +226,7 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $request->validate([
-            'login_id' => 'bail|integer|exists:logins,id|unique:customer,login_id|unique:employee,login_id',
+            'login_id' => 'bail|integer|exists:logins,id|unique:customers,login_id|unique:employees,login_id',
             'address_id' => 'bail|integer|exists:addresses,id',
             'name' => 'bail|max:255',
         ]);

@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/departments/{departmentId}/employees",
+     *      path="/api/department/{departmentId}/employees",
      *      operationId="EmployeeController.index",
      *      tags={"Locations"},
      *      summary="Get list of employees in department",
@@ -61,16 +61,6 @@ class EmployeeController extends Controller
     public function index(Department $department)
     {
         return Response($department->employees()->paginate(500));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -175,17 +165,6 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Employee $employee)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -249,7 +228,7 @@ class EmployeeController extends Controller
      *
      * @OA\Delete(
      *      path="/api/employees/{employeeId}",
-     *      operationId="EmployeeController.show",
+     *      operationId="EmployeeController.destroy",
      *      tags={"Locations"},
      *      summary="Delete employee",
      *      description="Deletes employee and returns nothing",
