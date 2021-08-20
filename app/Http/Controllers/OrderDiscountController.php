@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\OrderDiscount;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="OrderDiscounts",
- *     description="",
- * )
- */
 class OrderDiscountController extends Controller
 {
     /**
@@ -20,8 +14,8 @@ class OrderDiscountController extends Controller
      *
      * @OA\Get(
      *      path="/api/orders/{orderId}/discounts",
-     *      operationId="index",
-     *      tags={"Orders","OrderDiscounts"},
+     *      operationId="OrderDiscountController.index",
+     *      tags={"Orders"},
      *      summary="Get list of order discounts",
      *      description="Returns list of order discounts",
      *      @OA\Parameter(

@@ -20,7 +20,7 @@ class CustomerController extends Controller
      *
      * @OA\Get(
      *      path="/api/customers",
-     *      operationId="index",
+     *      operationId="CustomerController.index",
      *      tags={"Customers"},
      *      summary="Get list of customers",
      *      description="Returns list of customers",

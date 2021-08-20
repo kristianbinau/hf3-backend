@@ -16,7 +16,7 @@
                 ],
                 "summary": "Get list of addresses",
                 "description": "Returns list of addresses",
-                "operationId": "index",
+                "operationId": "AddressController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -93,7 +93,7 @@
                 ],
                 "summary": "Get list of cities",
                 "description": "Returns list of cities",
-                "operationId": "index",
+                "operationId": "CityController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -130,7 +130,7 @@
                 ],
                 "summary": "Get list of counties",
                 "description": "Returns list of counties",
-                "operationId": "index",
+                "operationId": "CountryController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -167,7 +167,7 @@
                 ],
                 "summary": "Get list of customers",
                 "description": "Returns list of customers",
-                "operationId": "index",
+                "operationId": "CustomerController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -197,15 +197,24 @@
                 ]
             }
         },
-        "/api/departments": {
+        "/api/locations/{locationId}/departments": {
             "get": {
                 "tags": [
-                    "Departments"
+                    "Locations"
                 ],
-                "summary": "Get list of departments",
-                "description": "Returns list of departments",
-                "operationId": "index",
+                "summary": "Get list of departments in location",
+                "description": "Returns list of departments in location",
+                "operationId": "DepartmentController.index",
                 "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "description": "Location Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "page",
                         "in": "query",
@@ -241,7 +250,7 @@
                 ],
                 "summary": "Get list of employees",
                 "description": "Returns list of employees",
-                "operationId": "index",
+                "operationId": "EmployeeController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -278,7 +287,7 @@
                 ],
                 "summary": "Get list of items",
                 "description": "Returns list of items",
-                "operationId": "index",
+                "operationId": "ItemController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -315,7 +324,7 @@
                 ],
                 "summary": "Get list of locations",
                 "description": "Returns list of locations",
-                "operationId": "index",
+                "operationId": "LocationController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -352,7 +361,7 @@
                 ],
                 "summary": "Get list of manufacturers",
                 "description": "Returns list of manufacturers",
-                "operationId": "index",
+                "operationId": "ManufacturerController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -389,7 +398,7 @@
                 ],
                 "summary": "Get list of orders",
                 "description": "Returns list of orders",
-                "operationId": "index",
+                "operationId": "OrderController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -422,12 +431,11 @@
         "/api/orders/{orderId}/deliveries": {
             "get": {
                 "tags": [
-                    "Orders",
-                    "OrderDeliveries"
+                    "Orders"
                 ],
                 "summary": "Get list of order deliveries",
                 "description": "Returns list of order deliveries",
-                "operationId": "index",
+                "operationId": "OrderDeliveryController.index",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -457,16 +465,40 @@
                 ]
             }
         },
-        "/api/orders/{orderId}/deliveries/{deliveryId}": {
+        "/api/ordersDeliveriesTypes": {
             "get": {
                 "tags": [
-                    "Orders",
-                    "OrderDeliveries",
-                    "OrderDeliveryTypes"
+                    "Orders"
                 ],
                 "summary": "Get list of order delivery types",
                 "description": "Returns list of  order delivery types",
-                "operationId": "index",
+                "operationId": "OrderDeliveryTypeController.index.all",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/{orderId}/deliveries/{deliveryId}/types": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get list of order delivery types by order and deliveryId",
+                "description": "Returns list of  order delivery types order and deliveryId",
+                "operationId": "OrderDeliveryTypeController.index",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -508,12 +540,11 @@
         "/api/orders/{orderId}/discounts": {
             "get": {
                 "tags": [
-                    "Orders",
-                    "OrderDiscounts"
+                    "Orders"
                 ],
                 "summary": "Get list of order discounts",
                 "description": "Returns list of order discounts",
-                "operationId": "index",
+                "operationId": "OrderDiscountController.index",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -546,12 +577,11 @@
         "/api/orders/{orderId}/items": {
             "get": {
                 "tags": [
-                    "Orders",
-                    "OrderItems"
+                    "Orders"
                 ],
                 "summary": "Get list of order items",
                 "description": "Returns list of order items",
-                "operationId": "index",
+                "operationId": "OrderItemController.index",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -588,7 +618,7 @@
                 ],
                 "summary": "Get list of products",
                 "description": "Returns list of products",
-                "operationId": "index",
+                "operationId": "ProductController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -626,7 +656,7 @@
                 ],
                 "summary": "Get list of product types",
                 "description": "Returns list of product types",
-                "operationId": "index",
+                "operationId": "ProductTypeController.index",
                 "parameters": [
                     {
                         "name": "productId",
@@ -663,7 +693,7 @@
                 ],
                 "summary": "Get list of regions",
                 "description": "Returns list of regions",
-                "operationId": "index",
+                "operationId": "RegionController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -700,7 +730,7 @@
                 ],
                 "summary": "Get list of subregion",
                 "description": "Returns list of subregion",
-                "operationId": "index",
+                "operationId": "SubRegionController.index",
                 "parameters": [
                     {
                         "name": "page",
@@ -749,10 +779,6 @@
             "description": ""
         },
         {
-            "name": "Departments",
-            "description": ""
-        },
-        {
             "name": "Employees",
             "description": ""
         },
@@ -770,22 +796,6 @@
         },
         {
             "name": "Orders",
-            "description": ""
-        },
-        {
-            "name": "OrderDeliveries",
-            "description": ""
-        },
-        {
-            "name": "OrderDeliveryTypes",
-            "description": ""
-        },
-        {
-            "name": "OrderDiscounts",
-            "description": ""
-        },
-        {
-            "name": "OrderItems",
             "description": ""
         },
         {

@@ -20,7 +20,7 @@ class ProductController extends Controller
      *
      * @OA\Get(
      *      path="/api/products",
-     *      operationId="index",
+     *      operationId="ProductController.index",
      *      tags={"Products"},
      *      summary="Get list of products",
      *      description="Returns list of products",

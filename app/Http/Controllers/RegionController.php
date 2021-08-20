@@ -20,7 +20,7 @@ class RegionController extends Controller
      *
      * @OA\Get(
      *      path="/api/regions",
-     *      operationId="index",
+     *      operationId="RegionController.index",
      *      tags={"Region"},
      *      summary="Get list of regions",
      *      description="Returns list of regions",

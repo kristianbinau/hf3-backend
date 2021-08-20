@@ -20,7 +20,7 @@ class SubRegionController extends Controller
      *
      * @OA\Get(
      *      path="/api/subregion",
-     *      operationId="index",
+     *      operationId="SubRegionController.index",
      *      tags={"SubRegion"},
      *      summary="Get list of subregion",
      *      description="Returns list of subregion",

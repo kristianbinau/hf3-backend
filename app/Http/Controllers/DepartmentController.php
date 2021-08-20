@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="Departments",
- *     description="",
- * )
- */
 class DepartmentController extends Controller
 {
     /**
@@ -19,11 +13,20 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/departments",
-     *      operationId="index",
-     *      tags={"Departments"},
-     *      summary="Get list of departments",
-     *      description="Returns list of departments",
+     *      path="/api/locations/{locationId}/departments",
+     *      operationId="DepartmentController.index",
+     *      tags={"Locations"},
+     *      summary="Get list of departments in location",
+     *      description="Returns list of departments in location",
+     *      @OA\Parameter(
+     *          name="locationId",
+     *          description="Location Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Parameter(
      *          name="page",
      *          description="Page number",

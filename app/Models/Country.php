@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
+
+    public function subRegion()
+    {
+        return $this->belongsTo(SubRegion::class);
+    }
+
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
 }

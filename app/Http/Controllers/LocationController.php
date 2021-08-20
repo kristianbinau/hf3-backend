@@ -20,7 +20,7 @@ class LocationController extends Controller
      *
      * @OA\Get(
      *      path="/api/locations",
-     *      operationId="index",
+     *      operationId="LocationController.index",
      *      tags={"Locations"},
      *      summary="Get list of locations",
      *      description="Returns list of locations",

@@ -20,7 +20,7 @@ class CityController extends Controller
      *
      * @OA\Get(
      *      path="/api/cities",
-     *      operationId="index",
+     *      operationId="CityController.index",
      *      tags={"Cities"},
      *      summary="Get list of cities",
      *      description="Returns list of cities",

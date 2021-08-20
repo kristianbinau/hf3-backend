@@ -20,7 +20,7 @@ class AddressController extends Controller
      *
      * @OA\Get(
      *      path="/api/addresses",
-     *      operationId="index",
+     *      operationId="AddressController.index",
      *      tags={"Addresses"},
      *      summary="Get list of addresses",
      *      description="Returns list of addresses",

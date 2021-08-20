@@ -20,7 +20,7 @@ class ItemController extends Controller
      *
      * @OA\Get(
      *      path="/api/items",
-     *      operationId="index",
+     *      operationId="ItemController.index",
      *      tags={"Items"},
      *      summary="Get list of items",
      *      description="Returns list of items",

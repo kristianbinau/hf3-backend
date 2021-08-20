@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\OrderDeliveryType;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="OrderDeliveryTypes",
- *     description="",
- * )
- */
 class OrderDeliveryTypeController extends Controller
 {
     /**
@@ -19,11 +13,35 @@ class OrderDeliveryTypeController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/orders/{orderId}/deliveries/{deliveryId}",
-     *      operationId="index",
-     *      tags={"Orders","OrderDeliveries","OrderDeliveryTypes"},
+     *      path="/api/ordersDeliveriesTypes",
+     *      operationId="OrderDeliveryTypeController.index.all",
+     *      tags={"Orders"},
      *      summary="Get list of order delivery types",
      *      description="Returns list of  order delivery types",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     *
+     * @OA\Get(
+     *      path="/api/orders/{orderId}/deliveries/{deliveryId}/types",
+     *      operationId="OrderDeliveryTypeController.index",
+     *      tags={"Orders"},
+     *      summary="Get list of order delivery types by order and deliveryId",
+     *      description="Returns list of  order delivery types order and deliveryId",
      *      @OA\Parameter(
      *          name="orderId",
      *          description="Order Id",
@@ -59,8 +77,15 @@ class OrderDeliveryTypeController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(int $orderId = NULL, int $deliveryId = NULL)
     {
+        error_log(print_r($orderId, true));
+        error_log(print_r($deliveryId, true));
+        if ($orderId !== NULL && $deliveryId !== NULL) {
+            error_log(print_r("NOT NULL", true));
+            return Response(OrderDeliveryType::select('*')->paginate(500));
+        }
+
         return Response(OrderDeliveryType::select('*')->paginate(500));
     }
 

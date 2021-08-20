@@ -20,7 +20,7 @@ class EmployeeController extends Controller
      *
      * @OA\Get(
      *      path="/api/employees",
-     *      operationId="index",
+     *      operationId="EmployeeController.index",
      *      tags={"Employees"},
      *      summary="Get list of employees",
      *      description="Returns list of employees",

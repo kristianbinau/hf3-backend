@@ -20,7 +20,7 @@ class ManufacturerController extends Controller
      *
      * @OA\Get(
      *      path="/api/manufacturers",
-     *      operationId="index",
+     *      operationId="ManufacturerController.index",
      *      tags={"Manufacturers"},
      *      summary="Get list of manufacturers",
      *      description="Returns list of manufacturers",

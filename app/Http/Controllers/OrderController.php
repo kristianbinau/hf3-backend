@@ -20,7 +20,7 @@ class OrderController extends Controller
      *
      * @OA\Get(
      *      path="/api/orders",
-     *      operationId="index",
+     *      operationId="OrderController.index",
      *      tags={"Orders"},
      *      summary="Get list of orders",
      *      description="Returns list of orders",

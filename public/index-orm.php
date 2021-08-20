@@ -31,14 +31,14 @@ AbstractOrm::setConn();
 
 
 // Example 1
-/*
+
 $order = Order::retrieveByPK(2);
 foreach ($order->orderItems as $orderItem) {
     $item = Item::retrieveByPK($orderItem->item_id);
     $product = Product::retrieveByPK($item->product_id);
     echo $product->name;
 }
-*/
+
 
 
 // Example 2
@@ -46,3 +46,5 @@ $address = Address::retrieveByPK(1);
 echo 'Road: ' . $address->road . ' - ';
 echo 'Road Num: ' . $address->road_num . ' - ';
 echo 'Region Name: ' . $address->city->country->subRegion->region->name;
+
+//$product = Product::retrieveByField('name', 'James');

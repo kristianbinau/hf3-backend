@@ -20,7 +20,7 @@ class CountryController extends Controller
      *
      * @OA\Get(
      *      path="/api/counties",
-     *      operationId="index",
+     *      operationId="CountryController.index",
      *      tags={"Counties"},
      *      summary="Get list of counties",
      *      description="Returns list of counties",

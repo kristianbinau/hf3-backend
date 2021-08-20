@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\OrderDelivery;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="OrderDeliveries",
- *     description="",
- * )
- */
 class OrderDeliveryController extends Controller
 {
     /**
@@ -20,8 +14,8 @@ class OrderDeliveryController extends Controller
      *
      * @OA\Get(
      *      path="/api/orders/{orderId}/deliveries",
-     *      operationId="index",
-     *      tags={"Orders","OrderDeliveries"},
+     *      operationId="OrderDeliveryController.index",
+     *      tags={"Orders"},
      *      summary="Get list of order deliveries",
      *      description="Returns list of order deliveries",
      *      @OA\Parameter(

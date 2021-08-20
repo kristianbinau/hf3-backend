@@ -76,7 +76,9 @@ window.onload = function() {
     dom_id: '#swagger-ui',
 
     url: "{!! $urlToDocs !!}",
-    operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
+
+    operationsSorter: 'alpha',
+    tagsSorter: 'alpha',
     configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
     validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
     oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback') }}",

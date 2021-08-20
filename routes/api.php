@@ -17,9 +17,9 @@ use App\Http\Controllers\OrderDeliveryTypeController;
 use App\Http\Controllers\OrderDiscountController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SubRegionController;
-use Database\Seeders\ProductTypeSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +46,9 @@ Route::apiResource('regions', RegionController::class);
 
 Route::apiResource('items', ItemController::class);
 Route::apiResource('products', ProductController::class);
-Route::apiResource('products.types', ProductTypeSeeder::class);
-Route::apiResource('products.manufacturers', ManufacturerController::class)->shallow();
+Route::apiResource('products.types', ProductTypeController::class);
+Route::apiResource('productsTypes', ProductTypeController::class);
+Route::apiResource('manufacturers', ManufacturerController::class);
 
 Route::apiResource('locations', LocationController::class);
 Route::apiResource('locations.departments', DepartmentController::class)->shallow();;
@@ -55,10 +56,11 @@ Route::apiResource('locations.departments.employees', EmployeeController::class)
 Route::apiResource('locations.items', LocationItemController::class);
 
 Route::apiResource('orders', OrderController::class);
-Route::apiResource('orders.items', OrderItemController::class);
-Route::apiResource('orders.deliveries', OrderDeliveryController::class);
+Route::apiResource('orders.items', OrderItemController::class)->shallow();
+Route::apiResource('orders.discounts', OrderDiscountController::class)->shallow();
+Route::apiResource('orders.deliveries', OrderDeliveryController::class)->shallow();
 Route::apiResource('orders.deliveries.types', OrderDeliveryTypeController::class);
-Route::apiResource('orders.discounts', OrderDiscountController::class);
+Route::apiResource('ordersDeliveriesTypes', OrderDeliveryTypeController::class);
 
 Route::apiResource('customers', CustomerController::class);
 Route::apiResource('customers.orders', CustomerOrderController::class)->shallow();
