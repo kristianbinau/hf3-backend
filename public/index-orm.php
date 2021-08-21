@@ -26,19 +26,20 @@ require_once('orm/Region.php');
 require_once('orm/SubRegion.php');
 
 
-// Create connection MySQL server.
-AbstractOrm::setConn();
+// Create connection MariaDB server.
+AbstractOrm::setConn('mariadb', 'example_app', 'sail', 'password', 'utf8mb4');
 
 
 // Example 1
 
-$order = Order::retrieveByPK(2);
+$order = Order::retrieveByPK(1);
 foreach ($order->orderItems as $orderItem) {
     $item = Item::retrieveByPK($orderItem->item_id);
     $product = Product::retrieveByPK($item->product_id);
     echo $product->name;
 }
 
+$manufacturer = Manufactor::retrieveByPK('1');
 
 
 // Example 2

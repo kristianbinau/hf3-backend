@@ -70,7 +70,12 @@ abstract class AbstractOrm implements IAbstractOrm
      */
     public function delete(): void
     {
-        $sql = 'DELETE FROM users WHERE id=:id';
+        $sql = sprintf(
+            'DELETE FROM %s WHERE %s = :id',
+            self::getTableName(),
+            self::getTablePk(),
+        );
+
         $stmt= self::getConn()->prepare($sql);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         $stmt->execute();
