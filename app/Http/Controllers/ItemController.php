@@ -81,10 +81,42 @@ class ItemController extends Controller
      *
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/items/{itemId}",
+     *      operationId="ItemController.show",
+     *      tags={"Items"},
+     *      summary="Get item",
+     *      description="Returns Get item",
+     *      @OA\Parameter(
+     *          name="itemId",
+     *          description="Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Item $item)
     {
-        //
+        return Response($item);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -53,9 +54,9 @@ class DepartmentController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(Location $location)
     {
-        return Response(Department::select('*')->paginate(500));
+        return Response($location->departments()->paginate(500));
     }
 
     /**
@@ -84,10 +85,42 @@ class DepartmentController extends Controller
      *
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/departments/{departmentId}",
+     *      operationId="DepartmentController.show",
+     *      tags={"Locations"},
+     *      summary="Get department",
+     *      description="Returns Get department",
+     *      @OA\Parameter(
+     *          name="departmentId",
+     *          description="Department Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Department $department)
     {
-        //
+        return Response($department);
     }
 
     /**

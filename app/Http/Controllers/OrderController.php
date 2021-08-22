@@ -81,10 +81,42 @@ class OrderController extends Controller
      *
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders/{orderId}",
+     *      operationId="OrderController.show",
+     *      tags={"Orders"},
+     *      summary="Get order",
+     *      description="Returns Get order",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Order $order)
     {
-        //
+        return Response($order);
     }
 
     /**

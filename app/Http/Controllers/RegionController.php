@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="Region",
- *     description="",
- * )
- */
 class RegionController extends Controller
 {
     /**
@@ -21,7 +15,7 @@ class RegionController extends Controller
      * @OA\Get(
      *      path="/api/regions",
      *      operationId="RegionController.index",
-     *      tags={"Region"},
+     *      tags={"Addresses"},
      *      summary="Get list of regions",
      *      description="Returns list of regions",
      *      @OA\Parameter(
@@ -81,10 +75,42 @@ class RegionController extends Controller
      *
      * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/regions/{regionId}",
+     *      operationId="RegionController.show",
+     *      tags={"Addresses"},
+     *      summary="Get region",
+     *      description="Returns Get region",
+     *      @OA\Parameter(
+     *          name="regionId",
+     *          description="Region Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Region $region)
     {
-        //
+        return Response($region);
     }
 
     /**

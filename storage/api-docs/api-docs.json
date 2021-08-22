@@ -46,19 +46,19 @@
                 ]
             }
         },
-        "/projects/{id}": {
+        "/api/addresses/{addressId}": {
             "get": {
                 "tags": [
-                    "Projects"
+                    "Addresses"
                 ],
-                "summary": "Get project information",
-                "description": "Returns project data",
-                "operationId": "getProjectById",
+                "summary": "Get address",
+                "description": "Returns Get address",
+                "operationId": "AddressController.show",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "addressId",
                         "in": "path",
-                        "description": "Project id",
+                        "description": "Address Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -78,10 +78,7 @@
                 },
                 "security": [
                     {
-                        "oauth2_security_example": [
-                            "write:projects",
-                            "read:projects"
-                        ]
+                        "api_key_security_example": []
                     }
                 ]
             }
@@ -89,7 +86,7 @@
         "/api/cities": {
             "get": {
                 "tags": [
-                    "Cities"
+                    "Addresses"
                 ],
                 "summary": "Get list of cities",
                 "description": "Returns list of cities",
@@ -123,10 +120,47 @@
                 ]
             }
         },
+        "/api/cities/{cityId}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get city",
+                "description": "Returns Get city",
+                "operationId": "CityController.show",
+                "parameters": [
+                    {
+                        "name": "cityId",
+                        "in": "path",
+                        "description": "City Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/counties": {
             "get": {
                 "tags": [
-                    "Counties"
+                    "Addresses"
                 ],
                 "summary": "Get list of counties",
                 "description": "Returns list of counties",
@@ -137,6 +171,43 @@
                         "in": "query",
                         "description": "Page number",
                         "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/countries/{countryId}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get country",
+                "description": "Returns Get country",
+                "operationId": "CountryController.show",
+                "parameters": [
+                    {
+                        "name": "countryId",
+                        "in": "path",
+                        "description": "Country Id",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -174,6 +245,43 @@
                         "in": "query",
                         "description": "Page number",
                         "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/customers/{customerId}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get customer",
+                "description": "Returns Get customer",
+                "operationId": "CustomerController.show",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -243,20 +351,103 @@
                 ]
             }
         },
-        "/api/employees": {
+        "/api/departments/{departmentId}": {
             "get": {
                 "tags": [
-                    "Employees"
+                    "Locations"
                 ],
-                "summary": "Get list of employees",
-                "description": "Returns list of employees",
+                "summary": "Get department",
+                "description": "Returns Get department",
+                "operationId": "DepartmentController.show",
+                "parameters": [
+                    {
+                        "name": "departmentId",
+                        "in": "path",
+                        "description": "Department Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/departments/{departmentId}/employees": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get list of employees in department",
+                "description": "Returns list of employees  in department",
                 "operationId": "EmployeeController.index",
                 "parameters": [
+                    {
+                        "name": "departmentId",
+                        "in": "path",
+                        "description": "Department Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
                     {
                         "name": "page",
                         "in": "query",
                         "description": "Page number",
                         "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/{employeeId}": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get employee",
+                "description": "Returns Get employee",
+                "operationId": "EmployeeController.show",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "Employee Id",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -317,6 +508,43 @@
                 ]
             }
         },
+        "/api/items/{itemId}": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get item",
+                "description": "Returns Get item",
+                "operationId": "ItemController.show",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "description": "Item Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/locations": {
             "get": {
                 "tags": [
@@ -331,6 +559,43 @@
                         "in": "query",
                         "description": "Page number",
                         "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/{locationId}": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get location",
+                "description": "Returns Get location",
+                "operationId": "LocationController.show",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "description": "Location Id",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -391,6 +656,43 @@
                 ]
             }
         },
+        "/api/manufacturers/{manufacturerId}": {
+            "get": {
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Get manufacturer",
+                "description": "Returns Get manufacturer",
+                "operationId": "ManufacturerController.show",
+                "parameters": [
+                    {
+                        "name": "manufacturerId",
+                        "in": "path",
+                        "description": "Manufacturer Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/orders": {
             "get": {
                 "tags": [
@@ -428,13 +730,50 @@
                 ]
             }
         },
+        "/api/orders/{orderId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order",
+                "description": "Returns Get order",
+                "operationId": "OrderController.show",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/orders/{orderId}/deliveries": {
             "get": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order deliveries",
-                "description": "Returns list of order deliveries",
+                "summary": "Get list of order deliveries in order",
+                "description": "Returns list of order deliveries in order",
                 "operationId": "OrderDeliveryController.index",
                 "parameters": [
                     {
@@ -465,14 +804,25 @@
                 ]
             }
         },
-        "/api/ordersDeliveriesTypes": {
+        "/api/orders-deliveries/{orderDeliveryId}": {
             "get": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order delivery types",
-                "description": "Returns list of  order delivery types",
-                "operationId": "OrderDeliveryTypeController.index.all",
+                "summary": "Get order delivery",
+                "description": "Returns Get order delivery",
+                "operationId": "OrderDeliveryController.show",
+                "parameters": [
+                    {
+                        "name": "orderDeliveryId",
+                        "in": "path",
+                        "description": "Order Delivery Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -491,28 +841,45 @@
                 ]
             }
         },
-        "/api/orders/{orderId}/deliveries/{deliveryId}/types": {
+        "/api/orders-deliveries-types": {
             "get": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order delivery types by order and deliveryId",
-                "description": "Returns list of  order delivery types order and deliveryId",
+                "summary": "Get list of order delivery types",
+                "description": "Returns list of  order delivery types",
                 "operationId": "OrderDeliveryTypeController.index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders-deliveries-types/{ordersDeliveriesTypeId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order delivery type",
+                "description": "Returns Get order delivery type",
+                "operationId": "OrderDeliveryTypeController.show",
                 "parameters": [
                     {
-                        "name": "orderId",
+                        "name": "ordersDeliveriesTypeId",
                         "in": "path",
-                        "description": "Order Id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "deliveryId",
-                        "in": "path",
-                        "description": "Delivery Id",
+                        "description": "Orders Deliveries Type Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -542,8 +909,8 @@
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order discounts",
-                "description": "Returns list of order discounts",
+                "summary": "Get list of order discounts in order",
+                "description": "Returns list of order discounts in order",
                 "operationId": "OrderDiscountController.index",
                 "parameters": [
                     {
@@ -574,19 +941,93 @@
                 ]
             }
         },
+        "/api/orders-discounts/{orderDiscountId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order discount",
+                "description": "Returns Get order discount",
+                "operationId": "OrderDiscountController.show",
+                "parameters": [
+                    {
+                        "name": "orderDiscountId",
+                        "in": "path",
+                        "description": "Order Discount Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/orders/{orderId}/items": {
             "get": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order items",
-                "description": "Returns list of order items",
+                "summary": "Get list of order items in order",
+                "description": "Returns list of order items in order",
                 "operationId": "OrderItemController.index",
                 "parameters": [
                     {
                         "name": "orderId",
                         "in": "path",
                         "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/orders-items/{orderItemId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order item",
+                "description": "Returns Get order item",
+                "operationId": "OrderItemController.show",
+                "parameters": [
+                    {
+                        "name": "orderItemId",
+                        "in": "path",
+                        "description": "Order Item Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -648,15 +1089,14 @@
                 ]
             }
         },
-        "/api/products/{productId}/types": {
+        "/api/product/{productId}": {
             "get": {
                 "tags": [
-                    "Products",
-                    "ProductTypes"
+                    "Products"
                 ],
-                "summary": "Get list of product types",
-                "description": "Returns list of product types",
-                "operationId": "ProductTypeController.index",
+                "summary": "Get product",
+                "description": "Returns Get product",
+                "operationId": "ProductController.show",
                 "parameters": [
                     {
                         "name": "productId",
@@ -686,10 +1126,84 @@
                 ]
             }
         },
+        "/api/products-types": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of product types",
+                "description": "Returns list of product types",
+                "operationId": "ProductTypeController.index",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/products-types/{productTypeId}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get product type",
+                "description": "Returns Get product type",
+                "operationId": "ProductTypeController.show",
+                "parameters": [
+                    {
+                        "name": "productTypeId",
+                        "in": "path",
+                        "description": "Product Type Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/regions": {
             "get": {
                 "tags": [
-                    "Region"
+                    "Addresses"
                 ],
                 "summary": "Get list of regions",
                 "description": "Returns list of regions",
@@ -723,10 +1237,47 @@
                 ]
             }
         },
+        "/api/regions/{regionId}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get region",
+                "description": "Returns Get region",
+                "operationId": "RegionController.show",
+                "parameters": [
+                    {
+                        "name": "regionId",
+                        "in": "path",
+                        "description": "Region Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/subregion": {
             "get": {
                 "tags": [
-                    "SubRegion"
+                    "Addresses"
                 ],
                 "summary": "Get list of subregion",
                 "description": "Returns list of subregion",
@@ -759,6 +1310,43 @@
                     }
                 ]
             }
+        },
+        "/api/subregions/{subRegionId}": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get subregion",
+                "description": "Returns Get subregion",
+                "operationId": "RegionController.show",
+                "parameters": [
+                    {
+                        "name": "subRegionId",
+                        "in": "path",
+                        "description": "SubRegion Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
         }
     },
     "tags": [
@@ -767,19 +1355,7 @@
             "description": ""
         },
         {
-            "name": "Cities",
-            "description": ""
-        },
-        {
-            "name": "Counties",
-            "description": ""
-        },
-        {
             "name": "Customers",
-            "description": ""
-        },
-        {
-            "name": "Employees",
             "description": ""
         },
         {
@@ -800,18 +1376,6 @@
         },
         {
             "name": "Products",
-            "description": ""
-        },
-        {
-            "name": "ProductTypes",
-            "description": ""
-        },
-        {
-            "name": "Region",
-            "description": ""
-        },
-        {
-            "name": "SubRegion",
             "description": ""
         }
     ],

@@ -81,10 +81,42 @@ class ManufacturerController extends Controller
      *
      * @param  \App\Models\Manufacturer  $manufacturer
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/manufacturers/{manufacturerId}",
+     *      operationId="ManufacturerController.show",
+     *      tags={"Manufacturers"},
+     *      summary="Get manufacturer",
+     *      description="Returns Get manufacturer",
+     *      @OA\Parameter(
+     *          name="manufacturerId",
+     *          description="Manufacturer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Manufacturer $manufacturer)
     {
-        //
+        return Response($manufacturer);
     }
 
     /**

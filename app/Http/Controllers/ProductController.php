@@ -81,10 +81,42 @@ class ProductController extends Controller
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/product/{productId}",
+     *      operationId="ProductController.show",
+     *      tags={"Products"},
+     *      summary="Get product",
+     *      description="Returns Get product",
+     *      @OA\Parameter(
+     *          name="productId",
+     *          description="Product Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Product $product)
     {
-        //
+        return Response($product);
     }
 
     /**

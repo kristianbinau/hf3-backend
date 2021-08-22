@@ -16,8 +16,8 @@ class OrderDeliveryController extends Controller
      *      path="/api/orders/{orderId}/deliveries",
      *      operationId="OrderDeliveryController.index",
      *      tags={"Orders"},
-     *      summary="Get list of order deliveries",
-     *      description="Returns list of order deliveries",
+     *      summary="Get list of order deliveries in order",
+     *      description="Returns list of order deliveries in order",
      *      @OA\Parameter(
      *          name="orderId",
      *          description="Order Id",
@@ -75,10 +75,42 @@ class OrderDeliveryController extends Controller
      *
      * @param  \App\Models\OrderDelivery  $orderDelivery
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders-deliveries/{orderDeliveryId}",
+     *      operationId="OrderDeliveryController.show",
+     *      tags={"Orders"},
+     *      summary="Get order delivery",
+     *      description="Returns Get order delivery",
+     *      @OA\Parameter(
+     *          name="orderDeliveryId",
+     *          description="Order Delivery Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(OrderDelivery $orderDelivery)
     {
-        //
+        return Response($orderDelivery);
     }
 
     /**

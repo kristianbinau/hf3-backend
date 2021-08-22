@@ -81,10 +81,42 @@ class LocationController extends Controller
      *
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/locations/{locationId}",
+     *      operationId="LocationController.show",
+     *      tags={"Locations"},
+     *      summary="Get location",
+     *      description="Returns Get location",
+     *      @OA\Parameter(
+     *          name="locationId",
+     *          description="Location Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Location $location)
     {
-        //
+        return Response($location);
     }
 
     /**

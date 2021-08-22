@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SubRegion;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="SubRegion",
- *     description="",
- * )
- */
 class SubRegionController extends Controller
 {
     /**
@@ -21,7 +15,7 @@ class SubRegionController extends Controller
      * @OA\Get(
      *      path="/api/subregion",
      *      operationId="SubRegionController.index",
-     *      tags={"SubRegion"},
+     *      tags={"Addresses"},
      *      summary="Get list of subregion",
      *      description="Returns list of subregion",
      *      @OA\Parameter(
@@ -81,10 +75,42 @@ class SubRegionController extends Controller
      *
      * @param  \App\Models\SubRegion  $subRegion
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/subregions/{subRegionId}",
+     *      operationId="RegionController.show",
+     *      tags={"Addresses"},
+     *      summary="Get subregion",
+     *      description="Returns Get subregion",
+     *      @OA\Parameter(
+     *          name="subRegionId",
+     *          description="SubRegion Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(SubRegion $subRegion)
     {
-        //
+        return Response($subRegion);
     }
 
     /**

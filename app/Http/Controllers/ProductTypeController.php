@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="ProductTypes",
- *     description="",
- * )
- */
 class ProductTypeController extends Controller
 {
     /**
@@ -19,16 +13,16 @@ class ProductTypeController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/products/{productId}/types",
+     *      path="/api/products-types",
      *      operationId="ProductTypeController.index",
-     *      tags={"Products","ProductTypes"},
+     *      tags={"Products"},
      *      summary="Get list of product types",
      *      description="Returns list of product types",
      *      @OA\Parameter(
-     *          name="productId",
-     *          description="Product Id",
-     *          required=true,
-     *          in="path",
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -81,10 +75,42 @@ class ProductTypeController extends Controller
      *
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/products-types/{productTypeId}",
+     *      operationId="ProductTypeController.show",
+     *      tags={"Products"},
+     *      summary="Get product type",
+     *      description="Returns Get product type",
+     *      @OA\Parameter(
+     *          name="productTypeId",
+     *          description="Product Type Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(ProductType $productType)
     {
-        //
+        return Response($productType);
     }
 
     /**

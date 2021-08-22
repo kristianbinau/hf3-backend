@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="Counties",
- *     description="",
- * )
- */
 class CountryController extends Controller
 {
     /**
@@ -21,7 +15,7 @@ class CountryController extends Controller
      * @OA\Get(
      *      path="/api/counties",
      *      operationId="CountryController.index",
-     *      tags={"Counties"},
+     *      tags={"Addresses"},
      *      summary="Get list of counties",
      *      description="Returns list of counties",
      *      @OA\Parameter(
@@ -81,10 +75,42 @@ class CountryController extends Controller
      *
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/countries/{countryId}",
+     *      operationId="CountryController.show",
+     *      tags={"Addresses"},
+     *      summary="Get country",
+     *      description="Returns Get country",
+     *      @OA\Parameter(
+     *          name="countryId",
+     *          description="Country Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Country $country)
     {
-        //
+        return Response($country);
     }
 
     /**

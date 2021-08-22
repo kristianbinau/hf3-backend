@@ -83,14 +83,14 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/projects/{id}",
-     *      operationId="getProjectById",
-     *      tags={"Projects"},
-     *      summary="Get project information",
-     *      description="Returns project data",
+     *      path="/api/addresses/{addressId}",
+     *      operationId="AddressController.show",
+     *      tags={"Addresses"},
+     *      summary="Get address",
+     *      description="Returns Get address",
      *      @OA\Parameter(
-     *          name="id",
-     *          description="Project id",
+     *          name="addressId",
+     *          description="Address Id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -109,16 +109,14 @@ class AddressController extends Controller
      *          response=404,
      *          description="Resource Not Found"
      *       ),
-     *      security={
-     *         {
-     *             "oauth2_security_example": {"write:projects", "read:projects"}
-     *         }
-     *     },
-     * )
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Address $address)
     {
-        //
+        return Response($address);
     }
 
     /**

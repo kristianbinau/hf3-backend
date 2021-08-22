@@ -16,8 +16,8 @@ class OrderDiscountController extends Controller
      *      path="/api/orders/{orderId}/discounts",
      *      operationId="OrderDiscountController.index",
      *      tags={"Orders"},
-     *      summary="Get list of order discounts",
-     *      description="Returns list of order discounts",
+     *      summary="Get list of order discounts in order",
+     *      description="Returns list of order discounts in order",
      *      @OA\Parameter(
      *          name="orderId",
      *          description="Order Id",
@@ -75,10 +75,42 @@ class OrderDiscountController extends Controller
      *
      * @param  \App\Models\OrderDiscount  $orderDiscount
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders-discounts/{orderDiscountId}",
+     *      operationId="OrderDiscountController.show",
+     *      tags={"Orders"},
+     *      summary="Get order discount",
+     *      description="Returns Get order discount",
+     *      @OA\Parameter(
+     *          name="orderDiscountId",
+     *          description="Order Discount Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(OrderDiscount $orderDiscount)
     {
-        //
+        return Response($orderDiscount);
     }
 
     /**

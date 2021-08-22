@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Tag(
- *     name="Employees",
- *     description="",
- * )
- */
 class EmployeeController extends Controller
 {
     /**
@@ -19,11 +14,20 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/employees",
+     *      path="/api/departments/{departmentId}/employees",
      *      operationId="EmployeeController.index",
-     *      tags={"Employees"},
-     *      summary="Get list of employees",
-     *      description="Returns list of employees",
+     *      tags={"Locations"},
+     *      summary="Get list of employees in department",
+     *      description="Returns list of employees  in department",
+     *      @OA\Parameter(
+     *          name="departmentId",
+     *          description="Department Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Parameter(
      *          name="page",
      *          description="Page number",
@@ -50,9 +54,9 @@ class EmployeeController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(Department $department)
     {
-        return Response(Employee::select('*')->paginate(500));
+        return Response($department->employees()->paginate(500));
     }
 
     /**
@@ -81,10 +85,42 @@ class EmployeeController extends Controller
      *
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/employees/{employeeId}",
+     *      operationId="EmployeeController.show",
+     *      tags={"Locations"},
+     *      summary="Get employee",
+     *      description="Returns Get employee",
+     *      @OA\Parameter(
+     *          name="employeeId",
+     *          description="Employee Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Employee $employee)
     {
-        //
+        return Response($employee);
     }
 
     /**

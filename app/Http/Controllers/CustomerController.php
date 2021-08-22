@@ -81,10 +81,42 @@ class CustomerController extends Controller
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/customers/{customerId}",
+     *      operationId="CustomerController.show",
+     *      tags={"Customers"},
+     *      summary="Get customer",
+     *      description="Returns Get customer",
+     *      @OA\Parameter(
+     *          name="customerId",
+     *          description="Customer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(Customer $customer)
     {
-        //
+        return Response($customer);
     }
 
     /**

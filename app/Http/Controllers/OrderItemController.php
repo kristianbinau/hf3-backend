@@ -16,8 +16,8 @@ class OrderItemController extends Controller
      *      path="/api/orders/{orderId}/items",
      *      operationId="OrderItemController.index",
      *      tags={"Orders"},
-     *      summary="Get list of order items",
-     *      description="Returns list of order items",
+     *      summary="Get list of order items in order",
+     *      description="Returns list of order items in order",
      *      @OA\Parameter(
      *          name="orderId",
      *          description="Order Id",
@@ -75,10 +75,42 @@ class OrderItemController extends Controller
      *
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *      path="/api/orders-items/{orderItemId}",
+     *      operationId="OrderItemController.show",
+     *      tags={"Orders"},
+     *      summary="Get order item",
+     *      description="Returns Get order item",
+     *      @OA\Parameter(
+     *          name="orderItemId",
+     *          description="Order Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function show(OrderItem $orderItem)
     {
-        //
+        return Response($orderItem);
     }
 
     /**
