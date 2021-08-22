@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Login extends Model
 {
     use HasFactory;
+
+    public function delete()
+    {
+        return parent::delete();
+    }
 }

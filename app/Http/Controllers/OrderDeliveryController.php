@@ -29,7 +29,10 @@ class OrderDeliveryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -93,7 +96,10 @@ class OrderDeliveryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -141,9 +147,46 @@ class OrderDeliveryController extends Controller
      *
      * @param  \App\Models\OrderDelivery  $orderDelivery
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete (
+     *      path="/api/orders-deliveries/{orderDeliveryId}",
+     *      operationId="OrderDeliveryController.show",
+     *      tags={"Orders"},
+     *      summary="Delete order delivery",
+     *      description="Deletes order delivery and returns nothing",
+     *      @OA\Parameter(
+     *          name="orderDeliveryId",
+     *          description="Order Delivery Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(OrderDelivery $orderDelivery)
     {
-        //
+        $orderDelivery->delete();
+
+        return Response('', 204);
     }
 }

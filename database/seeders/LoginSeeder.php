@@ -19,7 +19,7 @@ class LoginSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        for ($x = 1 ; $x <= 1000 ; $x++) {
+        for ($x = 1 ; $x <= 5000 ; $x++) {
             DB::table('logins')->insert([
                 'username' => $faker->userName(),
                 'password' => Hash::make($faker->password()),

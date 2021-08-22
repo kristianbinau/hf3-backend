@@ -18,4 +18,13 @@ class Department extends Model
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function delete()
+    {
+        foreach($this->employees()->get() as $employee) {
+            $employee->delete();
+        }
+
+        return parent::delete();
+    }
 }

@@ -29,7 +29,10 @@ class OrderItemController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -93,7 +96,10 @@ class OrderItemController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -141,9 +147,46 @@ class OrderItemController extends Controller
      *
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/orders-items/{orderItemId}",
+     *      operationId="OrderItemController.show",
+     *      tags={"Orders"},
+     *      summary="Delete order item",
+     *      description="Deletes order item and returns nothing",
+     *      @OA\Parameter(
+     *          name="orderItemId",
+     *          description="Order Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(OrderItem $orderItem)
     {
-        //
+        $orderItem->delete();
+
+        return Response('', 204);
     }
 }

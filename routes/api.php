@@ -43,8 +43,8 @@ Route::apiResource('regions.subregions', SubRegionController::class)->only(['ind
 Route::apiResource('subregions', SubRegionController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('subregions.counties', SubRegionController::class)->only(['index']);
 Route::apiResource('counties', CountryController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('cities', CityController::class);
-Route::apiResource('addresses', AddressController::class);
+Route::apiResource('cities', CityController::class)->except(['destroy']);
+Route::apiResource('addresses', AddressController::class)->except(['destroy']);
 
 Route::apiResource('items', ItemController::class);
 Route::apiResource('products', ProductController::class);

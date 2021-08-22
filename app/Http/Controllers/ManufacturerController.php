@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manufacturer;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\AbstractList;
 
 /**
  * @OA\Tag(
@@ -35,7 +36,10 @@ class ManufacturerController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -68,18 +72,58 @@ class ManufacturerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/manufacturers/{manufacturerId}",
+     *      operationId="ManufacturerController.store",
+     *      tags={"Manufacturers"},
+     *      summary="Put manufacturer",
+     *      description="Returns Get manufacturer",
+     *      @OA\Parameter(
+     *          name="manufacturerId",
+     *          description="Manufacturer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       },
+     *     )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'address_id' => 'bail|required|integer|exists:addresses,id',
+            'name' => 'bail|required|max:255',
+        ]);
+
+        Manufacturer::create($request->safe()->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Manufacturer  $manufacturer
+     * @param \App\Models\Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
@@ -99,7 +143,10 @@ class ManufacturerController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -122,7 +169,7 @@ class ManufacturerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Manufacturer  $manufacturer
+     * @param \App\Models\Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
      */
     public function edit(Manufacturer $manufacturer)
@@ -133,8 +180,8 @@ class ManufacturerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Manufacturer  $manufacturer
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Manufacturer $manufacturer)
@@ -145,11 +192,48 @@ class ManufacturerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Manufacturer  $manufacturer
+     * @param \App\Models\Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/manufacturers/{manufacturerId}",
+     *      operationId="ManufacturerController.destroy",
+     *      tags={"Manufacturers"},
+     *      summary="Delete manufacturer",
+     *      description="Deletes manufacturer and returns nothing",
+     *      @OA\Parameter(
+     *          name="manufacturerId",
+     *          description="Manufacturer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Manufacturer $manufacturer)
     {
-        //
+        $manufacturer->delete();
+
+        return Response('', 204);
     }
 }

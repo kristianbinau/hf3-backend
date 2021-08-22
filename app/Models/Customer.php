@@ -13,4 +13,24 @@ class Customer extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function login()
+    {
+        return $this->belongsTo(Login::class);
+    }
+
+    public function delete()
+    {
+        foreach($this->orders()->get() as $order) {
+            $order->delete();
+        }
+
+        $parent = parent::delete();
+
+        foreach($this->login()->get() as $login) {
+            $login->delete();
+        }
+
+        return $parent;
+    }
 }

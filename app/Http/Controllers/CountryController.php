@@ -29,7 +29,10 @@ class CountryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -93,7 +96,10 @@ class CountryController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,

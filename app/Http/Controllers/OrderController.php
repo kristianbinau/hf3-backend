@@ -35,7 +35,10 @@ class OrderController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -99,7 +102,10 @@ class OrderController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -147,9 +153,46 @@ class OrderController extends Controller
      *
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/orders/{orderId}",
+     *      operationId="OrderController.show",
+     *      tags={"Orders"},
+     *      summary="Delete order",
+     *      description="Deletes order and returns nothing",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return Response('', 204);
     }
 }

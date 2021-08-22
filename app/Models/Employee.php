@@ -13,4 +13,20 @@ class Employee extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function login()
+    {
+        return $this->belongsTo(Login::class);
+    }
+
+    public function delete()
+    {
+        $parent = parent::delete();
+
+        foreach($this->login()->get() as $login) {
+            $login->delete();
+        }
+
+        return $parent;
+    }
 }

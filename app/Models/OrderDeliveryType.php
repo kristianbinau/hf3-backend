@@ -13,4 +13,13 @@ class OrderDeliveryType extends Model
     {
         return $this->hasMany(OrderDelivery::class);
     }
+
+    public function delete()
+    {
+        foreach($this->orderDeliveries()->get() as $orderDelivery) {
+            $orderDelivery->delete();
+        }
+
+        return parent::delete();
+    }
 }

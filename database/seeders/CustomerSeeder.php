@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
 
         for ($x = 1 ; $x <= 2500 ; $x++) {
             DB::table('customers')->insert([
-                'login_id' => $faker->numberBetween(1,1000),
+                'login_id' => $x,
                 'address_id' => $faker->numberBetween(1,5000),
                 'name' => $faker->name(),
                 'created_at' => Carbon::now(),

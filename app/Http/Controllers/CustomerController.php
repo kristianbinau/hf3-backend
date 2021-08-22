@@ -35,7 +35,10 @@ class CustomerController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -99,7 +102,10 @@ class CustomerController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -147,9 +153,46 @@ class CustomerController extends Controller
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/customers/{customerId}",
+     *      operationId="CustomerController.destroy",
+     *      tags={"Customers"},
+     *      summary="Delete customer",
+     *      description="Deletes customer and returns nothing",
+     *      @OA\Parameter(
+     *          name="customerId",
+     *          description="Customer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+
+        return Response('', 204);
     }
 }

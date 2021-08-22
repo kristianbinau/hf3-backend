@@ -29,7 +29,10 @@ class OrderDiscountController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -93,7 +96,10 @@ class OrderDiscountController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -141,9 +147,46 @@ class OrderDiscountController extends Controller
      *
      * @param  \App\Models\OrderDiscount  $orderDiscount
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete (
+     *      path="/api/orders-discounts/{orderDiscountId}",
+     *      operationId="OrderDiscountController.show",
+     *      tags={"Orders"},
+     *      summary="Delete order discount",
+     *      description="Deletes order discount and returns nothing",
+     *      @OA\Parameter(
+     *          name="orderDiscountId",
+     *          description="Order Discount Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(OrderDiscount $orderDiscount)
     {
-        //
+        $orderDiscount->delete();
+
+        return Response('', 204);
     }
 }

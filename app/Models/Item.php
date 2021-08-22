@@ -16,6 +16,15 @@ class Item extends Model
 
     public function orderItem()
     {
-        return $this->belongsTo(OrderItem::class);
+        return $this->hasOne(OrderItem::class);
+    }
+
+    public function delete()
+    {
+        foreach($this->orderItem()->get() as $orderItem) {
+            $orderItem->delete();
+        }
+
+        return parent::delete();
     }
 }

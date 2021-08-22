@@ -35,7 +35,10 @@ class LocationController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -99,7 +102,10 @@ class LocationController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -147,9 +153,46 @@ class LocationController extends Controller
      *
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/locations/{locationId}",
+     *      operationId="LocationController.show",
+     *      tags={"Locations"},
+     *      summary="Delete location",
+     *      description="Deletes location and returns nothing",
+     *      @OA\Parameter(
+     *          name="locationId",
+     *          description="Location Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Location $location)
     {
-        //
+        $location->delete();
+
+        return Response('', 204);
     }
 }

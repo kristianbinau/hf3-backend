@@ -35,7 +35,10 @@ class ProductController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -99,7 +102,10 @@ class ProductController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -147,9 +153,46 @@ class ProductController extends Controller
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/product/{productId}",
+     *      operationId="ProductController.show",
+     *      tags={"Products"},
+     *      summary="Delete product",
+     *      description="Deletes product and returns nothing",
+     *      @OA\Parameter(
+     *          name="productId",
+     *          description="Product Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return Response('', 204);
     }
 }

@@ -13,4 +13,13 @@ class ProductType extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function delete()
+    {
+        foreach($this->products()->get() as $product) {
+            $product->delete();
+        }
+
+        return parent::delete();
+    }
 }

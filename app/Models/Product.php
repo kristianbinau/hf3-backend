@@ -23,4 +23,13 @@ class Product extends Model
     {
         return $this->belongsTo(Manufacturer::class);
     }
+
+    public function delete()
+    {
+        foreach($this->items()->get() as $item) {
+            $item->delete();
+        }
+
+        return parent::delete();
+    }
 }

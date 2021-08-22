@@ -39,7 +39,10 @@ class DepartmentController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -103,7 +106,10 @@ class DepartmentController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -151,9 +157,46 @@ class DepartmentController extends Controller
      *
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/departments/{departmentId}",
+     *      operationId="DepartmentController.show",
+     *      tags={"Locations"},
+     *      summary="Delete department",
+     *      description="Deletes department and returns nothing",
+     *      @OA\Parameter(
+     *          name="departmentId",
+     *          description="Department Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Department $department)
     {
-        //
+        $department->delete();
+
+        return Response('', 204);
     }
 }

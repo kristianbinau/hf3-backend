@@ -22,7 +22,7 @@ class EmployeeSeeder extends Seeder
             DB::table('employees')->insert([
                 'department_id' => $faker->numberBetween(1,20),
                 'address_id' => $faker->numberBetween(1,5000),
-                'login_id' => $faker->numberBetween(1,1000),
+                'login_id' => $x + 2500,
                 'name' => $faker->name(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

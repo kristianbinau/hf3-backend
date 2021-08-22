@@ -39,7 +39,10 @@ class EmployeeController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -103,7 +106,10 @@ class EmployeeController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -151,9 +157,46 @@ class EmployeeController extends Controller
      *
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/employees/{employeeId}",
+     *      operationId="EmployeeController.show",
+     *      tags={"Locations"},
+     *      summary="Delete employee",
+     *      description="Deletes employee and returns nothing",
+     *      @OA\Parameter(
+     *          name="employeeId",
+     *          description="Employee Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+
+        return Response('', 204);
     }
 }

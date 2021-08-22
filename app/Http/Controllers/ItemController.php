@@ -35,7 +35,10 @@ class ItemController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -99,7 +102,10 @@ class ItemController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -147,9 +153,46 @@ class ItemController extends Controller
      *
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete(
+     *      path="/api/items/{itemId}",
+     *      operationId="ItemController.show",
+     *      tags={"Items"},
+     *      summary="Delete item",
+     *      description="Deletes item and returns nothing",
+     *      @OA\Parameter(
+     *          name="itemId",
+     *          description="Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+
+        return Response('', 204);
     }
 }

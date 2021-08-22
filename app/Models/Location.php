@@ -23,4 +23,17 @@ class Location extends Model
     {
         return $this->hasManyThrough(Product::class, Item::class);
     }
+
+    public function delete()
+    {
+        foreach($this->departments()->get() as $department) {
+            $department->delete();
+        }
+
+        foreach($this->items()->get() as $item) {
+            $item->delete();
+        }
+
+        return parent::delete();
+    }
 }

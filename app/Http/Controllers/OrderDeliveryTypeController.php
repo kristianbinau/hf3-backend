@@ -20,7 +20,10 @@ class OrderDeliveryTypeController extends Controller
      *      description="Returns list of  order delivery types",
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -84,7 +87,10 @@ class OrderDeliveryTypeController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
      *       ),
      *       @OA\Response(
      *          response=400,
@@ -132,9 +138,46 @@ class OrderDeliveryTypeController extends Controller
      *
      * @param  \App\Models\OrderDeliveryType  $orderDeliveryType
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Delete (
+     *      path="/api/orders-deliveries-types/{ordersDeliveriesTypeId}",
+     *      operationId="OrderDeliveryTypeController.show",
+     *      tags={"Orders"},
+     *      summary="Delete order delivery type",
+     *      description="Deletes order delivery type and returns nothing",
+     *      @OA\Parameter(
+     *          name="ordersDeliveriesTypeId",
+     *          description="Orders Deliveries Type Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function destroy(OrderDeliveryType $orderDeliveryType)
     {
-        //
+        $orderDeliveryType->delete();
+
+        return Response('', 204);
     }
 }
