@@ -30,7 +30,8 @@ class LocationController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -73,10 +74,52 @@ class LocationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/locations/{locationId}",
+     *      operationId="LocationController.store",
+     *      tags={"Locations"},
+     *      summary="Store location",
+     *      description="Stores location and returns Get location",
+     *      @OA\Parameter(
+     *          name="locationId",
+     *          description="Location Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'address_id' => 'bail|required|integer|exists:addresses,id',
+            'name' => 'bail|required|max:255',
+        ]);
+
+        $location = Location::create($request->all());
+
+        return $this->show($location);
     }
 
     /**
@@ -142,10 +185,52 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/locations/{locationId}",
+     *      operationId="LocationController.update",
+     *      tags={"Locations"},
+     *      summary="Update location",
+     *      description="Updates location and returns Get location",
+     *      @OA\Parameter(
+     *          name="locationId",
+     *          description="Location Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, Location $location)
     {
-        //
+        $request->validate([
+            'address_id' => 'bail|integer|exists:addresses,id',
+            'name' => 'bail|max:255',
+        ]);
+
+        $location->update($request->all());
+
+        return $this->show($location);
     }
 
     /**

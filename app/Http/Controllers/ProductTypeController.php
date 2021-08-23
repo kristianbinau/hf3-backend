@@ -24,7 +24,8 @@ class ProductTypeController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -148,45 +149,9 @@ class ProductTypeController extends Controller
      * @param  \App\Models\ProductType  $productType
      * @return \Illuminate\Http\Response
      *
-     * @OA\Delete(
-     *      path="/api/products-types/{productTypeId}",
-     *      operationId="ProductTypeController.show",
-     *      tags={"Products"},
-     *      summary="Delete product type",
-     *      description="Deletes product type and returns nothing",
-     *      @OA\Parameter(
-     *          name="productTypeId",
-     *          description="Product Type Id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *          ),
-     *       ),
-     *       @OA\Response(
-     *          response=400,
-     *          description="Bad request"
-     *       ),
-     *       @OA\Response(
-     *          response=404,
-     *          description="Resource Not Found"
-     *       ),
-     *       security={
-     *           {"api_key_security_example": {}}
-     *       }
-     *     )
      */
     public function destroy(ProductType $productType)
     {
-        $productType->delete();
-
-        return Response('', 204);
+        //
     }
 }

@@ -30,7 +30,8 @@ class ProductController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -73,10 +74,56 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/products/{productId}",
+     *      operationId="ProductController.store",
+     *      tags={"Products"},
+     *      summary="Store product",
+     *      description="Stores product and returns Get product",
+     *      @OA\Parameter(
+     *          name="productId",
+     *          description="Product Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_type_id' => 'bail|required|integer|exists:product_types,id',
+            'manufacturer_id' => 'bail|required|integer|exists:manufacturers,id',
+            'name' => 'bail|required|max:255',
+            'description' => 'bail|required|max:255',
+            'price' => 'bail|required|integer',
+            'status' => 'bail|required',
+        ]);
+
+        $product = Product::create($request->all());
+
+        return $this->show($product);
     }
 
     /**
@@ -86,7 +133,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/product/{productId}",
+     *      path="/api/products/{productId}",
      *      operationId="ProductController.show",
      *      tags={"Products"},
      *      summary="Get product",
@@ -142,10 +189,56 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/products/{productId}",
+     *      operationId="ProductController.update",
+     *      tags={"Products"},
+     *      summary="Update product",
+     *      description="Updates product and returns Get product",
+     *      @OA\Parameter(
+     *          name="productId",
+     *          description="Product Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'product_type_id' => 'bail|integer|exists:product_types,id',
+            'manufacturer_id' => 'bail|integer|exists:manufacturers,id',
+            'name' => 'bail|max:255',
+            'description' => 'bail|max:255',
+            'price' => 'bail|integer',
+            'status' => 'bail',
+        ]);
+
+        $product->update($request->all());
+
+        return $this->show($product);
     }
 
     /**
@@ -155,7 +248,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Delete(
-     *      path="/api/product/{productId}",
+     *      path="/api/products/{productId}",
      *      operationId="ProductController.show",
      *      tags={"Products"},
      *      summary="Delete product",

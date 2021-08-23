@@ -30,7 +30,8 @@ class ItemController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -73,10 +74,54 @@ class ItemController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/items/{itemId}",
+     *      operationId="ItemController.store",
+     *      tags={"Items"},
+     *      summary="Store item",
+     *      description="Stores item and returns Get item",
+     *      @OA\Parameter(
+     *          name="itemId",
+     *          description="Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'location_id' => 'bail|required|integer|exists:locations,id',
+            'product_id' => 'bail|required|integer|exists:products,id',
+            'discount_price' => 'bail|required|nullable|integer',
+            'status ' => 'bail|required',
+        ]);
+
+        $item = Item::create($request->all());
+
+        return $this->show($item);
     }
 
     /**
@@ -142,10 +187,54 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/items/{itemId}",
+     *      operationId="ItemController.update",
+     *      tags={"Items"},
+     *      summary="Update item",
+     *      description="Updates item and returns Get item",
+     *      @OA\Parameter(
+     *          name="itemId",
+     *          description="Item Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $request->validate([
+            'location_id' => 'bail|integer|exists:locations,id',
+            'product_id' => 'bail|integer|exists:products,id',
+            'discount_price' => 'bail|integer',
+            'status ' => 'bail',
+        ]);
+
+        $item->update($request->all());
+
+        return $this->show($item);
     }
 
     /**

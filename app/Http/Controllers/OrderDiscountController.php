@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderDiscount;
 use Illuminate\Http\Request;
 
@@ -47,9 +48,9 @@ class OrderDiscountController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(Order $order)
     {
-        return Response(OrderDiscount::select('*')->paginate(500));
+        return Response($order->discounts()->paginate(500));
     }
 
     /**
@@ -65,12 +66,58 @@ class OrderDiscountController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param Order $order
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/orders/{orderId}/discounts",
+     *      operationId="OrderDiscountController.store",
+     *      tags={"Orders"},
+     *      summary="Store order discount in order",
+     *      description="Stores order discount in order and returns Get order discount",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
-        //
+        $request->order_id = $order->id;
+
+        $request->validate([
+            'order_id' => 'bail|required|integer|exists:orders,id',
+            'discount' => 'bail|required|integer',
+            'description' => 'bail|required|max:255',
+        ]);
+
+        $orderDiscount = OrderDiscount::create($request->all());
+
+        return $this->show($orderDiscount);
     }
 
     /**
@@ -136,10 +183,54 @@ class OrderDiscountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrderDiscount  $orderDiscount
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/orders/{orderId}/discounts",
+     *      operationId="OrderDiscountController.update",
+     *      tags={"Orders"},
+     *      summary="Store order discount in order",
+     *      summary="Update order discount",
+     *      description="Updates order discount and returns Get order discount",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, OrderDiscount $orderDiscount)
     {
-        //
+        $request->validate([
+            'order_id' => 'bail|integer|exists:orders,id',
+            'discount' => 'bail|integer',
+            'description' => 'bail|max:255',
+        ]);
+
+        $orderDiscount->update($request->all());
+
+        return $this->show($orderDiscount);
     }
 
     /**

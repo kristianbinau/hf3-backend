@@ -24,7 +24,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -87,6 +88,82 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Store address",
+                "description": "Stores address and returns Get address",
+                "operationId": "AddressController.store",
+                "parameters": [
+                    {
+                        "name": "addressId",
+                        "in": "path",
+                        "description": "Address Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Update address",
+                "description": "Updates address and returns Get address",
+                "operationId": "AddressController.update",
+                "parameters": [
+                    {
+                        "name": "addressId",
+                        "in": "path",
+                        "description": "Address Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/cities": {
@@ -104,7 +181,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -167,9 +245,85 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Store city",
+                "description": "Stores city and returns Get city",
+                "operationId": "CityController.store",
+                "parameters": [
+                    {
+                        "name": "cityId",
+                        "in": "path",
+                        "description": "City Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Store city",
+                "description": "Stores city and rReturns Get city",
+                "operationId": "CityController.update",
+                "parameters": [
+                    {
+                        "name": "cityId",
+                        "in": "path",
+                        "description": "City Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
-        "/api/counties": {
+        "/api/countries": {
             "get": {
                 "tags": [
                     "Addresses"
@@ -184,7 +338,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -264,7 +419,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -297,6 +453,44 @@
                 "summary": "Get customer",
                 "description": "Returns Get customer",
                 "operationId": "CustomerController.show",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Store customer",
+                "description": "Stores customer and returns Get customer",
+                "operationId": "CustomerController.store",
                 "parameters": [
                     {
                         "name": "customerId",
@@ -365,6 +559,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update customer",
+                "description": "Updates customer and returns Get customer",
+                "operationId": "CustomerController.update",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/locations/{locationId}/departments": {
@@ -391,7 +623,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -424,6 +657,44 @@
                 "summary": "Get department",
                 "description": "Returns Get department",
                 "operationId": "DepartmentController.show",
+                "parameters": [
+                    {
+                        "name": "departmentId",
+                        "in": "path",
+                        "description": "Department Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Store department",
+                "description": "Stores department and returns Get department",
+                "operationId": "DepartmentController.store",
                 "parameters": [
                     {
                         "name": "departmentId",
@@ -492,6 +763,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update department",
+                "description": "Updates department and returns Get department",
+                "operationId": "DepartmentController.update",
+                "parameters": [
+                    {
+                        "name": "departmentId",
+                        "in": "path",
+                        "description": "Department Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/departments/{departmentId}/employees": {
@@ -518,7 +827,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -551,6 +861,44 @@
                 "summary": "Get employee",
                 "description": "Returns Get employee",
                 "operationId": "EmployeeController.show",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "Employee Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Store employee",
+                "description": "Stores employee and returns Get employee",
+                "operationId": "EmployeeController.store",
                 "parameters": [
                     {
                         "name": "employeeId",
@@ -619,6 +967,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update employee",
+                "description": "Updates employee and returns Get employee",
+                "operationId": "EmployeeController.update",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "Employee Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/items": {
@@ -636,7 +1022,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -669,6 +1056,44 @@
                 "summary": "Get item",
                 "description": "Returns Get item",
                 "operationId": "ItemController.show",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "description": "Item Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Store item",
+                "description": "Stores item and returns Get item",
+                "operationId": "ItemController.store",
                 "parameters": [
                     {
                         "name": "itemId",
@@ -737,6 +1162,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Update item",
+                "description": "Updates item and returns Get item",
+                "operationId": "ItemController.update",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "description": "Item Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/locations": {
@@ -754,7 +1217,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -787,6 +1251,44 @@
                 "summary": "Get location",
                 "description": "Returns Get location",
                 "operationId": "LocationController.show",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "description": "Location Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Store location",
+                "description": "Stores location and returns Get location",
+                "operationId": "LocationController.store",
                 "parameters": [
                     {
                         "name": "locationId",
@@ -855,6 +1357,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update location",
+                "description": "Updates location and returns Get location",
+                "operationId": "LocationController.update",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "description": "Location Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/manufacturers": {
@@ -872,7 +1412,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -940,8 +1481,8 @@
                 "tags": [
                     "Manufacturers"
                 ],
-                "summary": "Put manufacturer",
-                "description": "Returns Get manufacturer",
+                "summary": "Store manufacturer",
+                "description": "Stores manufacturer and returns Get manufacturer",
                 "operationId": "ManufacturerController.store",
                 "parameters": [
                     {
@@ -1011,6 +1552,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Update manufacturer",
+                "description": "Updates manufacturer and returns Get manufacturer",
+                "operationId": "ManufacturerController.update",
+                "parameters": [
+                    {
+                        "name": "manufacturerId",
+                        "in": "path",
+                        "description": "Manufacturer Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/orders": {
@@ -1028,7 +1607,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -1061,6 +1641,44 @@
                 "summary": "Get order",
                 "description": "Returns Get order",
                 "operationId": "OrderController.show",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Store order",
+                "description": "Stores order and returns Get order",
+                "operationId": "OrderController.store",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -1129,6 +1747,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order",
+                "description": "Updates order and returns Get order",
+                "operationId": "OrderController.update",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/orders/{orderId}/deliveries": {
@@ -1139,6 +1795,44 @@
                 "summary": "Get list of order deliveries in order",
                 "description": "Returns list of order deliveries in order",
                 "operationId": "OrderDeliveryController.index",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Store order delivery in order",
+                "description": "Stores order delivery in order and returns Get order delivery",
+                "operationId": "OrderDeliveryController.store",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -1247,6 +1941,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order delivery",
+                "description": "Updates order delivery and returns Get order delivery",
+                "operationId": "OrderDeliveryController.update",
+                "parameters": [
+                    {
+                        "name": "orderDeliveryId",
+                        "in": "path",
+                        "description": "Order Delivery Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/orders-deliveries-types": {
@@ -1316,19 +2048,21 @@
                         "api_key_security_example": []
                     }
                 ]
-            },
-            "delete": {
+            }
+        },
+        "/api/orders/{orderId}/discounts": {
+            "get": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Delete order delivery type",
-                "description": "Deletes order delivery type and returns nothing",
-                "operationId": "OrderDeliveryTypeController.show",
+                "summary": "Get list of order discounts in order",
+                "description": "Returns list of order discounts in order",
+                "operationId": "OrderDiscountController.index",
                 "parameters": [
                     {
-                        "name": "ordersDeliveriesTypeId",
+                        "name": "orderId",
                         "in": "path",
-                        "description": "Orders Deliveries Type Id",
+                        "description": "Order Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1336,7 +2070,7 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "successful operation",
                         "content": {
                             "application/json": {}
@@ -1354,16 +2088,52 @@
                         "api_key_security_example": []
                     }
                 ]
-            }
-        },
-        "/api/orders/{orderId}/discounts": {
-            "get": {
+            },
+            "post": {
                 "tags": [
                     "Orders"
                 ],
-                "summary": "Get list of order discounts in order",
-                "description": "Returns list of order discounts in order",
-                "operationId": "OrderDiscountController.index",
+                "summary": "Store order discount in order",
+                "description": "Stores order discount in order and returns Get order discount",
+                "operationId": "OrderDiscountController.store",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order discount",
+                "description": "Updates order discount and returns Get order discount",
+                "operationId": "OrderDiscountController.update",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -1512,6 +2282,82 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Store order item in order",
+                "description": "Stores order item in order and returns Get order item",
+                "operationId": "OrderItemController.store",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update order item",
+                "description": "Updates order item and returns Get order item",
+                "operationId": "OrderItemController.update",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/orders-items/{orderItemId}": {
@@ -1607,7 +2453,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -1632,7 +2479,7 @@
                 ]
             }
         },
-        "/api/product/{productId}": {
+        "/api/products/{productId}": {
             "get": {
                 "tags": [
                     "Products"
@@ -1640,6 +2487,44 @@
                 "summary": "Get product",
                 "description": "Returns Get product",
                 "operationId": "ProductController.show",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Product Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Store product",
+                "description": "Stores product and returns Get product",
+                "operationId": "ProductController.store",
                 "parameters": [
                     {
                         "name": "productId",
@@ -1708,6 +2593,44 @@
                         "api_key_security_example": []
                     }
                 ]
+            },
+            "patch": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update product",
+                "description": "Updates product and returns Get product",
+                "operationId": "ProductController.update",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Product Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "/api/products-types": {
@@ -1725,7 +2648,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -1788,44 +2712,6 @@
                         "api_key_security_example": []
                     }
                 ]
-            },
-            "delete": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Delete product type",
-                "description": "Deletes product type and returns nothing",
-                "operationId": "ProductTypeController.show",
-                "parameters": [
-                    {
-                        "name": "productTypeId",
-                        "in": "path",
-                        "description": "Product Type Id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "content": {
-                            "application/json": {}
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "404": {
-                        "description": "Resource Not Found"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
             }
         },
         "/api/regions": {
@@ -1843,7 +2729,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -1923,7 +2810,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],

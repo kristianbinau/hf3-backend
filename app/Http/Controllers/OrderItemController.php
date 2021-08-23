@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
@@ -47,9 +48,9 @@ class OrderItemController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(Order $order)
     {
-        return Response(OrderItem::select('*')->paginate(500));
+        return Response($order->items()->paginate(500));
     }
 
     /**
@@ -65,12 +66,59 @@ class OrderItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param Order $order
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/orders/{orderId}/items",
+     *      operationId="OrderItemController.store",
+     *      tags={"Orders"},
+     *      summary="Store order item in order",
+     *      description="Stores order item in order and returns Get order item",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
-        //
+        $request->order_id = $order->id;
+
+        $request->validate([
+            'order_id' => 'bail|required|integer|exists:orders,id',
+            'item_id' => 'bail|required|integer|exists:items,id',
+            'price' => 'bail|required|integer',
+            'status' => 'bail|required',
+        ]);
+
+        $orderItem = OrderItem::create($request->all());
+
+        return $this->show($orderItem);
     }
 
     /**
@@ -136,10 +184,54 @@ class OrderItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrderItem  $orderItem
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch (
+     *      path="/api/orders/{orderId}/items",
+     *      operationId="OrderItemController.update",
+     *      tags={"Orders"},
+     *      summary="Update order item",
+     *      description="Updates order item and returns Get order item",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, OrderItem $orderItem)
     {
-        //
+        $request->validate([
+            'order_id' => 'bail|integer|exists:orders,id',
+            'item_id' => 'bail|integer|exists:items,id',
+            'price' => 'bail|integer',
+            'status' => 'bail',
+        ]);
+
+        $orderItem->update($request->all());
+
+        return $this->show($orderItem);
     }
 
     /**

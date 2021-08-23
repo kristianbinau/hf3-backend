@@ -31,7 +31,8 @@ class ManufacturerController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -79,8 +80,8 @@ class ManufacturerController extends Controller
      *      path="/api/manufacturers/{manufacturerId}",
      *      operationId="ManufacturerController.store",
      *      tags={"Manufacturers"},
-     *      summary="Put manufacturer",
-     *      description="Returns Get manufacturer",
+     *      summary="Store manufacturer",
+     *      description="Stores manufacturer and returns Get manufacturer",
      *      @OA\Parameter(
      *          name="manufacturerId",
      *          description="Manufacturer Id",
@@ -117,7 +118,9 @@ class ManufacturerController extends Controller
             'name' => 'bail|required|max:255',
         ]);
 
-        Manufacturer::create($request->safe()->all());
+        $manufacturer = Manufacturer::create($request->all());
+
+        return $this->show($manufacturer);
     }
 
     /**
@@ -183,10 +186,52 @@ class ManufacturerController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/manufacturers/{manufacturerId}",
+     *      operationId="ManufacturerController.update",
+     *      tags={"Manufacturers"},
+     *      summary="Update manufacturer",
+     *      description="Updates manufacturer and returns Get manufacturer",
+     *      @OA\Parameter(
+     *          name="manufacturerId",
+     *          description="Manufacturer Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, Manufacturer $manufacturer)
     {
-        //
+        $request->validate([
+            'address_id' => 'bail|integer|exists:addresses,id',
+            'name' => 'bail|max:255',
+        ]);
+
+        $manufacturer->update($request->all());
+
+        return $this->show($manufacturer);
     }
 
     /**

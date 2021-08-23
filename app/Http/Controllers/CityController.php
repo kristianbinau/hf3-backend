@@ -24,7 +24,8 @@ class CityController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
@@ -67,10 +68,53 @@ class CityController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/cities/{cityId}",
+     *      operationId="CityController.store",
+     *      tags={"Addresses"},
+     *      summary="Store city",
+     *      description="Stores city and returns Get city",
+     *      @OA\Parameter(
+     *          name="cityId",
+     *          description="City Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'country_id' => 'bail|required|integer|exists:countries,id',
+            'zipcode' => 'bail|required|max:255',
+            'name' => 'bail|required|max:255',
+        ]);
+
+        $city = City::create($request->all());
+
+        return $this->show($city);
     }
 
     /**
@@ -136,10 +180,53 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/cities/{cityId}",
+     *      operationId="CityController.update",
+     *      tags={"Addresses"},
+     *      summary="Store city",
+     *      description="Stores city and rReturns Get city",
+     *      @OA\Parameter(
+     *          name="cityId",
+     *          description="City Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, City $city)
     {
-        //
+        $request->validate([
+            'country_id' => 'bail|integer|exists:countries,id',
+            'zipcode' => 'bail|max:255',
+            'name' => 'bail|max:255',
+        ]);
+
+        $city->update($request->all());
+
+        return $this->show($city);
     }
 
     /**

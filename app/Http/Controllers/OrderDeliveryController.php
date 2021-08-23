@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderDelivery;
 use Illuminate\Http\Request;
 
@@ -47,9 +48,9 @@ class OrderDeliveryController extends Controller
      *       }
      *     )
      */
-    public function index()
+    public function index(Order $order)
     {
-        return Response(OrderDelivery::select('*')->paginate(500));
+        return Response($order->delivery()->paginate(500));
     }
 
     /**
@@ -65,12 +66,61 @@ class OrderDeliveryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param Order $order
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Post(
+     *      path="/api/orders/{orderId}/deliveries",
+     *      operationId="OrderDeliveryController.store",
+     *      tags={"Orders"},
+     *      summary="Store order delivery in order",
+     *      description="Stores order delivery in order and returns Get order delivery",
+     *      @OA\Parameter(
+     *          name="orderId",
+     *          description="Order Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
-        //
+        $request->order_id = $order->id;
+
+        $request->validate([
+            'order_id' => 'bail|required|integer|exists:orders,id|unique:order_deliveries,order_id',
+            'address_id' => 'bail|required|integer|exists:addresses,id',
+            'order_delivery_type_id' => 'bail|required|integer|exists:order_delivery_types,id',
+            'carrier' => 'bail|required|nullable|max:255',
+            'tracking_id' => 'bail|required|nullable|max:255',
+            'status' => 'bail|required',
+        ]);
+
+        $orderDelivery = OrderDelivery::create($request->all());
+
+        return $this->show($orderDelivery);
     }
 
     /**
@@ -136,10 +186,57 @@ class OrderDeliveryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\OrderDelivery  $orderDelivery
      * @return \Illuminate\Http\Response
+     *
+     * @OA\Patch(
+     *      path="/api/orders-deliveries/{orderDeliveryId}",
+     *      operationId="OrderDeliveryController.update",
+     *      tags={"Orders"},
+     *      summary="Get order delivery",
+     *      summary="Update order delivery",
+     *      description="Updates order delivery and returns Get order delivery",
+     *      @OA\Parameter(
+     *          name="orderDeliveryId",
+     *          description="Order Delivery Id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          ),
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *       ),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      */
     public function update(Request $request, OrderDelivery $orderDelivery)
     {
-        //
+        $request->validate([
+            'order_id' => 'bail|integer|exists:orders,id|unique:order_deliveries,order_id',
+            'address_id' => 'bail|integer|exists:addresses,id',
+            'order_delivery_type_id' => 'bail|integer|exists:order_delivery_types,id',
+            'carrier' => 'bail|nullable|max:255',
+            'tracking_id' => 'bail|nullable|max:255',
+            'status' => 'bail',
+        ]);
+
+        $orderDelivery->update($request->all());
+
+        return $this->show($orderDelivery);
     }
 
     /**

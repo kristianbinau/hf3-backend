@@ -13,7 +13,7 @@ class CountryController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/counties",
+     *      path="/api/countries",
      *      operationId="CountryController.index",
      *      tags={"Addresses"},
      *      summary="Get list of counties",
@@ -24,7 +24,8 @@ class CountryController extends Controller
      *          required=false,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(

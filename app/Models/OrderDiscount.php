@@ -9,6 +9,12 @@ class OrderDiscount extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'discount',
+        'description',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
