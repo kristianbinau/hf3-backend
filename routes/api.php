@@ -12,14 +12,14 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LocationItemController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderDeliveryController;
 use App\Http\Controllers\OrderDeliveryTypeController;
-use App\Http\Controllers\OrderDiscountController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\RegionSubRegionController;
 use App\Http\Controllers\SubRegionController;
+use App\Http\Controllers\SubRegionCountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,22 +39,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('regions', RegionController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('regions.subregions', SubRegionController::class)->only(['index']);
-Route::apiResource('subregions', SubRegionController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('subregions.counties', SubRegionController::class)->only(['index']);
-Route::apiResource('counties', CountryController::class)->except(['store', 'update', 'destroy']);
+Route::apiResource('regions.sub-regions', RegionSubRegionController::class)->only(['index']);
+Route::apiResource('sub-regions', SubRegionController::class)->except(['store', 'update', 'destroy']);
+Route::apiResource('sub-regions.countries', SubRegionCountryController::class)->only(['index']);
+Route::apiResource('countries', CountryController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('cities', CityController::class)->except(['destroy']);
 Route::apiResource('addresses', AddressController::class)->except(['destroy']);
 
 Route::apiResource('items', ItemController::class);
 Route::apiResource('products', ProductController::class);
-Route::apiResource('products-types', ProductTypeController::class)->only(['index', 'show']);;
+Route::apiResource('products-types', ProductTypeController::class)->only(['index', 'show']);
 Route::apiResource('manufacturers', ManufacturerController::class);
 
 Route::apiResource('locations', LocationController::class);
 Route::apiResource('locations.items', LocationItemController::class)->only(['index']);
-Route::apiResource('locations.departments', DepartmentController::class)->shallow();;
-Route::apiResource('departments.employees', EmployeeController::class)->shallow();;
+Route::apiResource('locations.departments', DepartmentController::class)->shallow();
+Route::apiResource('departments.employees', EmployeeController::class)->shallow();
 
 
 Route::apiResource('orders', OrderController::class);

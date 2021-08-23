@@ -185,8 +185,8 @@ class CityController extends Controller
      *      path="/api/cities/{cityId}",
      *      operationId="CityController.update",
      *      tags={"Addresses"},
-     *      summary="Store city",
-     *      description="Stores city and rReturns Get city",
+     *      summary="Update city",
+     *      description="Updates city and returns Get city",
      *      @OA\Parameter(
      *          name="cityId",
      *          description="City Id",

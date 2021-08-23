@@ -288,8 +288,8 @@
                 "tags": [
                     "Addresses"
                 ],
-                "summary": "Store city",
-                "description": "Stores city and rReturns Get city",
+                "summary": "Update city",
+                "description": "Updates city and returns Get city",
                 "operationId": "CityController.update",
                 "parameters": [
                     {
@@ -575,6 +575,56 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/customers/{customerId}/orders": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get list of orders in customer",
+                "description": "Returns list of orders in customer",
+                "operationId": "CustomerOrderController.index",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -1397,6 +1447,56 @@
                 ]
             }
         },
+        "/api/locations/{locationId}/items": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get list of items in location",
+                "description": "Returns list of items in location",
+                "operationId": "LocationItemController.index",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "path",
+                        "description": "Location Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/manufacturers": {
             "get": {
                 "tags": [
@@ -1804,6 +1904,16 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
                     }
                 ],
                 "responses": {
@@ -2067,6 +2177,16 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
                     }
                 ],
                 "responses": {
@@ -2260,6 +2380,16 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -2795,13 +2925,63 @@
                 ]
             }
         },
-        "/api/subregion": {
+        "/api/regions/{regionId}/sub-regions": {
             "get": {
                 "tags": [
                     "Addresses"
                 ],
-                "summary": "Get list of subregion",
-                "description": "Returns list of subregion",
+                "summary": "Get list of sub regions in region",
+                "description": "Returns list of sub regions in region",
+                "operationId": "RegionSubRegionController.index",
+                "parameters": [
+                    {
+                        "name": "regionId",
+                        "in": "path",
+                        "description": "Region Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/sub-regions": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get list of sub region",
+                "description": "Returns list of sub region",
                 "operationId": "SubRegionController.index",
                 "parameters": [
                     {
@@ -2836,22 +3016,72 @@
                 ]
             }
         },
-        "/api/subregions/{subRegionId}": {
+        "/api/sub-regions/{subRegionId}": {
             "get": {
                 "tags": [
                     "Addresses"
                 ],
-                "summary": "Get subregion",
-                "description": "Returns Get subregion",
-                "operationId": "RegionController.show",
+                "summary": "Get sub region",
+                "description": "Returns Get sub region",
+                "operationId": "SubRegionController.show",
                 "parameters": [
                     {
                         "name": "subRegionId",
                         "in": "path",
-                        "description": "SubRegion Id",
+                        "description": "Sub Region Id",
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/sub-regions/{subRegionId}/countries": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Get list of countries in sub regions",
+                "description": "Returns list of countries in sub regions",
+                "operationId": "SubRegionCountryController.index",
+                "parameters": [
+                    {
+                        "name": "subRegionId",
+                        "in": "path",
+                        "description": "Sub region Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],

@@ -13,11 +13,11 @@ class SubRegionController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/subregion",
+     *      path="/api/sub-regions",
      *      operationId="SubRegionController.index",
      *      tags={"Addresses"},
-     *      summary="Get list of subregion",
-     *      description="Returns list of subregion",
+     *      summary="Get list of sub region",
+     *      description="Returns list of sub region",
      *      @OA\Parameter(
      *          name="page",
      *          description="Page number",
@@ -81,14 +81,14 @@ class SubRegionController extends Controller
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
-     *      path="/api/subregions/{subRegionId}",
-     *      operationId="RegionController.show",
+     *      path="/api/sub-regions/{subRegionId}",
+     *      operationId="SubRegionController.show",
      *      tags={"Addresses"},
-     *      summary="Get subregion",
-     *      description="Returns Get subregion",
+     *      summary="Get sub region",
+     *      description="Returns Get sub region",
      *      @OA\Parameter(
      *          name="subRegionId",
-     *          description="SubRegion Id",
+     *          description="Sub Region Id",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

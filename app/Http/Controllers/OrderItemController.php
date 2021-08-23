@@ -11,6 +11,7 @@ class OrderItemController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Order $order
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
@@ -26,6 +27,16 @@ class OrderItemController extends Controller
      *          in="path",
      *          @OA\Schema(
      *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          description="Page number",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer",
+     *              default=1
      *          )
      *      ),
      *      @OA\Response(
