@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('regions', RegionController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('region.sub-regions', RegionSubRegionController::class)->only(['index']);
-Route::apiResource('sub-region', SubRegionController::class)->except(['store', 'update', 'destroy']);
+Route::apiResource('sub-regions', SubRegionController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('sub-region.countries', SubRegionCountryController::class)->only(['index']);
 Route::apiResource('countries', CountryController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('cities', CityController::class)->except(['destroy']);
