@@ -38,33 +38,33 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('regions', RegionController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('region.sub-regions', RegionSubRegionController::class)->only(['index']);
-Route::apiResource('sub-regions', SubRegionController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('sub-region.countries', SubRegionCountryController::class)->only(['index']);
-Route::apiResource('countries', CountryController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('cities', CityController::class)->except(['destroy']);
-Route::apiResource('addresses', AddressController::class)->except(['destroy']);
+Route::middleware('auth:sanctum')->apiResource('regions', RegionController::class)->except(['store', 'update', 'destroy']);
+Route::middleware('auth:sanctum')->apiResource('region.sub-regions', RegionSubRegionController::class)->only(['index']);
+Route::middleware('auth:sanctum')->apiResource('sub-regions', SubRegionController::class)->except(['store', 'update', 'destroy']);
+Route::middleware('auth:sanctum')->apiResource('sub-region.countries', SubRegionCountryController::class)->only(['index']);
+Route::middleware('auth:sanctum')->apiResource('countries', CountryController::class)->except(['store', 'update', 'destroy']);
+Route::middleware('auth:sanctum')->apiResource('cities', CityController::class)->except(['destroy']);
+Route::middleware('auth:sanctum')->apiResource('addresses', AddressController::class)->except(['destroy']);
 
-Route::apiResource('items', ItemController::class);
-Route::apiResource('products', ProductController::class);
-Route::apiResource('product-types', ProductTypeController::class)->only(['index', 'show']);
-Route::apiResource('manufacturers', ManufacturerController::class);
+Route::middleware('auth:sanctum')->apiResource('items', ItemController::class);
+Route::middleware('auth:sanctum')->apiResource('products', ProductController::class);
+Route::middleware('auth:sanctum')->apiResource('product-types', ProductTypeController::class)->only(['index', 'show']);
+Route::middleware('auth:sanctum')->apiResource('manufacturers', ManufacturerController::class);
 
-Route::apiResource('locations', LocationController::class);
-Route::apiResource('location.items', LocationItemController::class)->only(['index']);
-Route::apiResource('location.departments', DepartmentController::class)->shallow();
-Route::apiResource('department.employees', EmployeeController::class)->shallow();
+Route::middleware('auth:sanctum')->apiResource('locations', LocationController::class);
+Route::middleware('auth:sanctum')->apiResource('location.items', LocationItemController::class)->only(['index']);
+Route::middleware('auth:sanctum')->apiResource('location.departments', DepartmentController::class)->shallow();
+Route::middleware('auth:sanctum')->apiResource('department.employees', EmployeeController::class)->shallow();
 
 
-Route::apiResource('orders', OrderController::class);
-Route::apiResource('order.items', OrderItemController::class)->only(['index', 'store']);
-Route::apiResource('order-items', OrderItemController::class)->except(['index', 'store']);
-Route::apiResource('order.discounts', OrderItemController::class)->only(['index', 'store']);
-Route::apiResource('order-discounts', OrderItemController::class)->except(['index', 'store']);
-Route::apiResource('order.deliveries', OrderItemController::class)->only(['index', 'store']);
-Route::apiResource('order-deliveries', OrderItemController::class)->except(['index', 'store']);
-Route::apiResource('order-delivery-types', OrderDeliveryTypeController::class)->only(['index', 'show']);
+Route::middleware('auth:sanctum')->apiResource('orders', OrderController::class);
+Route::middleware('auth:sanctum')->apiResource('order.items', OrderItemController::class)->only(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order-items', OrderItemController::class)->except(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order.discounts', OrderItemController::class)->only(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order-discounts', OrderItemController::class)->except(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order.deliveries', OrderItemController::class)->only(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order-deliveries', OrderItemController::class)->except(['index', 'store']);
+Route::middleware('auth:sanctum')->apiResource('order-delivery-types', OrderDeliveryTypeController::class)->only(['index', 'show']);
 
-Route::apiResource('customers', CustomerController::class);
-Route::apiResource('customer.orders', CustomerOrderController::class)->only(['index']);
+Route::middleware('auth:sanctum')->apiResource('customers', CustomerController::class);
+Route::middleware('auth:sanctum')->apiResource('customer.orders', CustomerOrderController::class)->only(['index']);
